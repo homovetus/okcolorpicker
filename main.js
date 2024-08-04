@@ -16,7 +16,6 @@ document.addEventListener(
   "mouseup",
   function (event) {
     if (state.mouse_handler !== null) {
-      state.mouse_handler(event);
       state.mouse_handler = null;
       // update_url();
     }

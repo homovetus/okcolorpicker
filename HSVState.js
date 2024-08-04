@@ -12,7 +12,6 @@ export default class HSVState {
   set h(newHue) {
     this._hue = newHue;
     this._triggerChangeEvent("hueChange", newHue);
-    console.log("hueChange", newHue);
   }
 
   get s() {
@@ -22,7 +21,6 @@ export default class HSVState {
   set s(newSaturation) {
     this._saturation = newSaturation;
     this._triggerChangeEvent("saturationChange", newSaturation);
-    console.log("saturationChange", newSaturation);
   }
 
   get v() {
