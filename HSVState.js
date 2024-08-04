@@ -1,5 +1,5 @@
 export default class HSVState {
-  constructor(hue = 360, saturation = 100, value = 100) {
+  constructor(hue = 360, saturation = 1, value = 1) {
     this._hue = hue;
     this._saturation = saturation;
     this._value = value;
@@ -12,6 +12,7 @@ export default class HSVState {
   set h(newHue) {
     this._hue = newHue;
     this._triggerChangeEvent("hueChange", newHue);
+    console.log("hueChange", newHue);
   }
 
   get s() {
