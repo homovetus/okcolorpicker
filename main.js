@@ -39,7 +39,7 @@ document.addEventListener(
   function (event) {
     if (state.touch_handler !== null && event.touches.length === 0) {
       state.touch_handler = null;
-      update_url();
+      // update_url();
     }
   },
   false,

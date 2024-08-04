@@ -1,19 +1,23 @@
-import { setup_canvas_handler, clamp, state } from "./shared.js";
+import { setup_canvas_handler, clamp } from "./shared.js";
 import { okhsv_to_srgb } from "./conversion.js";
 
 export class Slider {
+  constructor(okhsv) {
+    this.okhsv = okhsv;
+  }
+
   setHueComponent(canvas, manipulator) {
     this.hue_canvas = document.getElementById(canvas);
     this.hue_manipulator = document.getElementById(manipulator);
 
-    setup_canvas_handler(this.hue_canvas, function (x, _) {
+    setup_canvas_handler(this.hue_canvas, (x, _) => {
       let picker_size = 257;
       let new_h = clamp(x / picker_size);
-      state.okhsv.h = new_h;
+      this.okhsv.h = new_h;
     });
 
     document.addEventListener("hueChange", () => {
-      let hue = state.okhsv.h;
+      let hue = this.okhsv.h;
       let picker_size = 257;
       this.hue_manipulator.transform.baseVal
         .getItem(0)
@@ -37,14 +41,14 @@ export class Slider {
     this.saturation_canvas = document.getElementById(canvas);
     this.saturation_manipulator = document.getElementById(manipulator);
 
-    setup_canvas_handler(this.saturation_canvas, function (x, _) {
+    setup_canvas_handler(this.saturation_canvas, (x, _) => {
       let picker_size = 257;
       let new_s = clamp(x / picker_size);
-      state.okhsv.s = new_s;
+      this.okhsv.s = new_s;
     });
 
     document.addEventListener("saturationChange", () => {
-      let saturation = state.okhsv.s;
+      let saturation = this.okhsv.s;
       let picker_size = 257;
       this.saturation_manipulator.transform.baseVal
         .getItem(0)
@@ -68,14 +72,14 @@ export class Slider {
     this.value_canvas = document.getElementById(canvas);
     this.value_manipulator = document.getElementById(manipulator);
 
-    setup_canvas_handler(this.value_canvas, function (x, _) {
+    setup_canvas_handler(this.value_canvas, (x, _) => {
       let picker_size = 257;
       let new_v = clamp(x / picker_size);
-      state.okhsv.v = new_v;
+      this.okhsv.v = new_v;
     });
 
     document.addEventListener("valueChange", () => {
-      let value = state.okhsv.v;
+      let value = this.okhsv.v;
       let picker_size = 257;
       this.value_manipulator.transform.baseVal
         .getItem(0)
@@ -101,7 +105,7 @@ export class Slider {
 
     let colors = new Uint8ClampedArray(width * 4);
     for (let i = 0; i < width; i++) {
-      let rgb = okhsv_to_srgb(i / width, state.okhsv.s, state.okhsv.v);
+      let rgb = okhsv_to_srgb(i / width, this.okhsv.s, this.okhsv.v);
       let index = 4 * i;
       colors[index + 0] = rgb[0];
       colors[index + 1] = rgb[1];
@@ -123,7 +127,7 @@ export class Slider {
 
     let colors = new Uint8ClampedArray(width * 4);
     for (let i = 0; i < width; i++) {
-      let rgb = okhsv_to_srgb(state.okhsv.h, i / width, state.okhsv.v);
+      let rgb = okhsv_to_srgb(this.okhsv.h, i / width, this.okhsv.v);
       let index = 4 * i;
       colors[index + 0] = rgb[0];
       colors[index + 1] = rgb[1];
@@ -145,7 +149,7 @@ export class Slider {
 
     let colors = new Uint8ClampedArray(width * 4);
     for (let i = 0; i < width; i++) {
-      let rgb = okhsv_to_srgb(state.okhsv.h, state.okhsv.s, i / width);
+      let rgb = okhsv_to_srgb(this.okhsv.h, this.okhsv.s, i / width);
       let index = 4 * i;
       colors[index + 0] = rgb[0];
       colors[index + 1] = rgb[1];
