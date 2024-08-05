@@ -1,6 +1,8 @@
 import { state } from "./shared.js";
 import { Slider } from "./Slider.js";
 import { Input } from "./Input.js";
+import { Slider2D } from "./Slider2D.js";
+import { okhsv_to_srgb } from "./conversion.js";
 
 let slider = new Slider(state.okhsv);
 slider.setHueComponent("okhsv_h_slider", "okhsv_h_manipulator");
@@ -12,6 +14,9 @@ input.setHueInput("okhsv_h_input");
 input.setSaturationInput("okhsv_s_input");
 input.setValueInput("okhsv_v_input");
 
+let slider2D = new Slider2D(state.okhsv);
+slider2D.setSVComponent("okhsv_sv_canvas", "okhsv_sv_manipulator");
+
 // trigger first render
 state.okhsv.h = 1;
 state.okhsv.s = 0.5;
@@ -22,7 +27,9 @@ document.addEventListener(
   function (_) {
     if (state.mouse_handler !== null) {
       state.mouse_handler = null;
-      // update_url();
+      let rgb = okhsv_to_srgb(state.okhsv.h, state.okhsv.s, state.okhsv.v);
+      document.getElementById("swatch").style.backgroundColor =
+        `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
     }
   },
   false,
@@ -33,6 +40,9 @@ document.addEventListener(
   function (event) {
     if (state.mouse_handler !== null) {
       state.mouse_handler(event);
+      let rgb = okhsv_to_srgb(state.okhsv.h, state.okhsv.s, state.okhsv.v);
+      document.getElementById("swatch").style.backgroundColor =
+        `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
     }
   },
   false,
