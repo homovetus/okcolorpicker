@@ -107,7 +107,7 @@ export class Slider {
       colors[index + 3] = 255;
     }
 
-    let img = new ImageData(width, height);
+    let img = new ImageData(width, height, { colorSpace: "srgb" });
     for (let i = 0; i < height; i++) {
       img.data.set(colors, i * width * 4);
     }
@@ -126,7 +126,7 @@ export class Slider {
       colors[index + 3] = 255;
     }
 
-    let img = new ImageData(width, height);
+    let img = new ImageData(width, height, { colorSpace: "srgb" });
     for (let i = 0; i < height; i++) {
       img.data.set(colors, i * width * 4);
     }
@@ -145,7 +145,7 @@ export class Slider {
       colors[index + 3] = 255;
     }
 
-    let img = new ImageData(width, height);
+    let img = new ImageData(width, height, { colorSpace: "srgb" });
     for (let i = 0; i < height; i++) {
       img.data.set(colors, i * width * 4);
     }
