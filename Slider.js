@@ -1,5 +1,5 @@
 import { setup_canvas_handler, clamp } from "./shared.js";
-import { okhsv_to_srgb } from "./conversion.js";
+import { okhsl_to_srgb } from "./conversion.js";
 
 export class Slider {
   constructor(okhsv) {
@@ -99,7 +99,7 @@ export class Slider {
   render_hue(width, height) {
     let colors = new Uint8ClampedArray(width * 4);
     for (let i = 0; i < width; i++) {
-      let rgb = okhsv_to_srgb(i / width, this.okhsv.s, this.okhsv.v);
+      let rgb = okhsl_to_srgb(i / width, this.okhsv.s, this.okhsv.v);
       let index = 4 * i;
       colors[index + 0] = rgb[0];
       colors[index + 1] = rgb[1];
@@ -118,7 +118,7 @@ export class Slider {
   render_saturation(width, height) {
     let colors = new Uint8ClampedArray(width * 4);
     for (let i = 0; i < width; i++) {
-      let rgb = okhsv_to_srgb(this.okhsv.h, i / width, this.okhsv.v);
+      let rgb = okhsl_to_srgb(this.okhsv.h, i / width, this.okhsv.v);
       let index = 4 * i;
       colors[index + 0] = rgb[0];
       colors[index + 1] = rgb[1];
@@ -137,7 +137,7 @@ export class Slider {
   render_value(width, height) {
     let colors = new Uint8ClampedArray(width * 4);
     for (let i = 0; i < width; i++) {
-      let rgb = okhsv_to_srgb(this.okhsv.h, this.okhsv.s, i / width);
+      let rgb = okhsl_to_srgb(this.okhsv.h, this.okhsv.s, i / width);
       let index = 4 * i;
       colors[index + 0] = rgb[0];
       colors[index + 1] = rgb[1];

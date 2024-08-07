@@ -1,5 +1,5 @@
 import { setup_canvas_handler, clamp } from "./shared.js";
-import { okhsv_to_srgb } from "./conversion.js";
+import { okhsl_to_srgb } from "./conversion.js";
 
 export class Slider2D {
   constructor(okhsv) {
@@ -40,7 +40,7 @@ export class Slider2D {
     let colors = new Uint8ClampedArray(width * height * 4);
     for (let i = 0; i < height; i++) {
       for (let j = 0; j < width; j++) {
-        let [r, g, b] = okhsv_to_srgb(this.okhsv.h, j / width, 1 - i / height);
+        let [r, g, b] = okhsl_to_srgb(this.okhsv.h, j / width, 1 - i / height);
         colors.set([r, g, b, 255], (i * width + j) * 4);
       }
     }
