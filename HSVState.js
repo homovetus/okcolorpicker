@@ -1,16 +1,16 @@
-const { okhsv_to_srgb, srgb_to_okhsv } = require("./conversion");
+const { srgb_to_okhsl } = require("./conversion");
 
 class HSVState {
   constructor(psState) {
     let color = psState.foregroundColor.rgb;
-    let hsv = srgb_to_okhsv(color.red, color.green, color.blue);
+    let hsv = srgb_to_okhsl(color.red, color.green, color.blue);
     this._hue = hsv[0];
     this._saturation = hsv[1];
     this._value = hsv[2];
 
     document.addEventListener("foregroundColorChanged", (c) => {
       let rgb = c.detail.rgb;
-      let hsv = srgb_to_okhsv(rgb.red, rgb.green, rgb.blue);
+      let hsv = srgb_to_okhsl(rgb.red, rgb.green, rgb.blue);
       this.h = hsv[0];
       this.s = hsv[1];
       this.v = hsv[2];

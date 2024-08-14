@@ -688,4 +688,4 @@ function rgb_to_hex(r, g, b) {
   return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
 }
 
-module.exports = { okhsv_to_srgb, srgb_to_okhsv };
+module.exports = { okhsl_to_srgb, srgb_to_okhsl };

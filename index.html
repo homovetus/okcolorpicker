@@ -3,53 +3,182 @@
   <head>
     <title>Color Picker</title>
     <script src="main.js"></script>
-    <link rel="stylesheet" href="style.css" />
+    <!--<link rel="stylesheet" href="style.css" />-->
+    <style>
+      div.colorpicker {
+        position: relative;
+        height: 300px;
+        width: 320px;
+      }
+      img.colorpicker {
+        position: absolute;
+        left: 10;
+        top: 10;
+      }
+      svg.colorpicker {
+        position: absolute;
+        left: 100;
+        pointer-events: none;
+      }
+      img.colorpicker_slider {
+        position: absolute;
+        left: 10px;
+        top: 10px;
+      }
+      div.swatch {
+        width: 64px;
+        height: 64px;
+        display: inline-block;
+      }
+    </style>
   </head>
+
   <body>
     <sp-heading>Layers</sp-heading>
-    <section>
+    <sp-body id="layers">🤓</sp-body>
+
+    <div class="colorpicker">
+      <img class="colorpicker" id="okhsv_sv_slider" width="257" height="257" />
+      <svg class="colorpicker" width="326" height="276">
+        <g transform="translate(0,0)">
+          <g id="okhsv_sv_manipulator" transform="translate(0,0)">
+            <circle
+              cx="0"
+              cy="0"
+              r="5"
+              fill="none"
+              stroke-width="1.75"
+              stroke="#ffffff"
+            ></circle>
+            <circle
+              cx="0"
+              cy="0"
+              r="6"
+              fill="none"
+              stroke-width="1.25"
+              stroke="#000000"
+            ></circle>
+          </g>
+        </g>
+      </svg>
+    </div>
+
+    <div class="slider">
       <table>
         <tr>
-          <td rowspan="4">
-            <div id="swatch" class="swatch"></div>
+          <td>
+            <img id="okhsv_h_slider" width="256" height="32" />
+            <svg class="colorpicker" width="326" height="276">
+              <g transform="translate(10,16)">
+                <g id="okhsv_h_manipulator" transform="translate(0,0)">
+                  <circle
+                    cx="0"
+                    cy="0"
+                    r="5"
+                    fill="none"
+                    stroke-width="1.75"
+                    stroke="#ffffff"
+                  ></circle>
+                  <circle
+                    cx="0"
+                    cy="0"
+                    r="6"
+                    fill="none"
+                    stroke-width="1.25"
+                    stroke="#000000"
+                  ></circle>
+                </g>
+              </g>
+            </svg>
           </td>
           <td>
-            <b>OKHSV</b>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <sp-field-label for="okhsv_h_input" size="s">H</sp-field-label>
-            <sp-textfield
+            <input
               type="number"
               id="okhsv_h_input"
-              size="s"
-            ></sp-textfield>
+              min="0"
+              max="360"
+              maxlength="3"
+              class="value_input"
+            />
           </td>
         </tr>
         <tr>
           <td>
-            <sp-field-label for="okhsv_s_input" size="s">S</sp-field-label>
-            <sp-textfield
+            <img id="okhsv_s_slider" width="256" height="32" />
+            <svg class="colorpicker" width="326" height="276">
+              <g transform="translate(10,16)">
+                <g id="okhsv_s_manipulator" transform="translate(0,0)">
+                  <circle
+                    cx="0"
+                    cy="0"
+                    r="5"
+                    fill="none"
+                    stroke-width="1.75"
+                    stroke="#ffffff"
+                  ></circle>
+                  <circle
+                    cx="0"
+                    cy="0"
+                    r="6"
+                    fill="none"
+                    stroke-width="1.25"
+                    stroke="#000000"
+                  ></circle>
+                </g>
+              </g>
+            </svg>
+          </td>
+          <td>
+            <input
               type="number"
               id="okhsv_s_input"
-              size="s"
-            ></sp-textfield>
+              min="0"
+              max="100"
+              maxlength="3"
+              class="value_input"
+            />
           </td>
         </tr>
         <tr>
           <td>
-            <sp-field-label for="okhsv_v_input" size="s">V</sp-field-label>
-            <sp-textfield
+            <img id="okhsv_v_slider" width="256" height="32" />
+            <svg class="colorpicker" width="326" height="276">
+              <g transform="translate(10,16)">
+                <g id="okhsv_v_manipulator" transform="translate(0,0)">
+                  <circle
+                    cx="0"
+                    cy="0"
+                    r="5"
+                    fill="none"
+                    stroke-width="1.75"
+                    stroke="#ffffff"
+                  ></circle>
+                  <circle
+                    cx="0"
+                    cy="0"
+                    r="6"
+                    fill="none"
+                    stroke-width="1.25"
+                    stroke="#000000"
+                  ></circle>
+                </g>
+              </g>
+            </svg>
+          </td>
+          <td>
+            <input
               type="number"
               id="okhsv_v_input"
-              size="s"
-            ></sp-textfield>
+              min="0"
+              max="100"
+              maxlength="3"
+              class="value_input"
+            />
           </td>
         </tr>
       </table>
-    </section>
-    <sp-body id="layers"> No layers </sp-body>
+    </div>
+
     <footer>
       <sp-button id="btnPopulate">Populate Layers</sp-button>
     </footer>
