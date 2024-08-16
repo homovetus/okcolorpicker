@@ -1,4 +1,7 @@
 const { srgb_to_okhsl } = require("./conversion");
+const { app } = require("photoshop");
+const { executeAsModal } = require("photoshop").core;
+const { SolidColor } = require("photoshop").app;
 
 class HSVState {
   constructor(psState) {
@@ -24,6 +27,7 @@ class HSVState {
   set h(newHue) {
     this._hue = newHue;
     this._triggerChangeEvent("hueChange", newHue);
+    this._updateForegroud();
   }
 
   get s() {
@@ -33,6 +37,7 @@ class HSVState {
   set s(newSaturation) {
     this._saturation = newSaturation;
     this._triggerChangeEvent("saturationChange", newSaturation);
+    this._updateForegroud();
   }
 
   get v() {
@@ -42,11 +47,25 @@ class HSVState {
   set v(newValue) {
     this._value = newValue;
     this._triggerChangeEvent("valueChange", newValue);
+    this._updateForegroud();
   }
 
   _triggerChangeEvent(eventName, value) {
-    console.log("triggering event", eventName, value);
     document.dispatchEvent(new CustomEvent(eventName, { detail: value }));
+  }
+
+  async _updateForegroud() {
+    let rgb = okhsl_to_srgb(this.h, this.s, this.v);
+    const newColor = new SolidColor();
+    newColor.rgb.red = rgb[0];
+    newColor.rgb.green = rgb[1];
+    newColor.rgb.blue = rgb[2];
+    let command = () => {
+      app.foregroundColor = newColor;
+    };
+    await executeAsModal(command, {
+      commandName: "Action Commands",
+    });
   }
 }
 
