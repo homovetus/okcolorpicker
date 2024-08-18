@@ -3,34 +3,7 @@
   <head>
     <title>Color Picker</title>
     <script src="main.js"></script>
-    <!--<link rel="stylesheet" href="style.css" />-->
-    <style>
-      div.colorpicker {
-        position: relative;
-        height: 300px;
-        width: 320px;
-      }
-      img.colorpicker {
-        position: absolute;
-        left: 10;
-        top: 10;
-      }
-      svg.colorpicker {
-        position: absolute;
-        left: 100;
-        pointer-events: none;
-      }
-      img.colorpicker_slider {
-        position: absolute;
-        left: 10px;
-        top: 10px;
-      }
-      div.swatch {
-        width: 64px;
-        height: 64px;
-        display: inline-block;
-      }
-    </style>
+    <link rel="stylesheet" href="style.css" />
   </head>
 
   <body>
@@ -38,10 +11,10 @@
     <sp-body id="layers">🤓</sp-body>
 
     <div class="colorpicker">
-      <img class="colorpicker" id="okhsv_sv_slider" width="257" height="257" />
-      <svg class="colorpicker" width="326" height="276">
+      <img class="colorpicker" id="hsl_sv_s" width="257" height="257" />
+      <svg class="colorpicker" width="257" height="257">
         <g transform="translate(0,0)">
-          <g id="okhsv_sv_manipulator" transform="translate(0,0)">
+          <g id="hsl_sv_m" transform="translate(0,0)">
             <circle
               cx="0"
               cy="0"
@@ -64,119 +37,107 @@
     </div>
 
     <div class="slider">
-      <table>
-        <tr>
-          <td>
-            <img id="okhsv_h_slider" width="256" height="32" />
-            <svg class="colorpicker" width="326" height="276">
-              <g transform="translate(10,16)">
-                <g id="okhsv_h_manipulator" transform="translate(0,0)">
-                  <circle
-                    cx="0"
-                    cy="0"
-                    r="5"
-                    fill="none"
-                    stroke-width="1.75"
-                    stroke="#ffffff"
-                  ></circle>
-                  <circle
-                    cx="0"
-                    cy="0"
-                    r="6"
-                    fill="none"
-                    stroke-width="1.25"
-                    stroke="#000000"
-                  ></circle>
-                </g>
-              </g>
-            </svg>
-          </td>
-          <td>
-            <input
-              type="number"
-              id="okhsv_h_input"
-              min="0"
-              max="360"
-              maxlength="3"
-              class="value_input"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <img id="okhsv_s_slider" width="256" height="32" />
-            <svg class="colorpicker" width="326" height="276">
-              <g transform="translate(10,16)">
-                <g id="okhsv_s_manipulator" transform="translate(0,0)">
-                  <circle
-                    cx="0"
-                    cy="0"
-                    r="5"
-                    fill="none"
-                    stroke-width="1.75"
-                    stroke="#ffffff"
-                  ></circle>
-                  <circle
-                    cx="0"
-                    cy="0"
-                    r="6"
-                    fill="none"
-                    stroke-width="1.25"
-                    stroke="#000000"
-                  ></circle>
-                </g>
-              </g>
-            </svg>
-          </td>
-          <td>
-            <input
-              type="number"
-              id="okhsv_s_input"
-              min="0"
-              max="100"
-              maxlength="3"
-              class="value_input"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <img id="okhsv_v_slider" width="256" height="32" />
-            <svg class="colorpicker" width="326" height="276">
-              <g transform="translate(10,16)">
-                <g id="okhsv_v_manipulator" transform="translate(0,0)">
-                  <circle
-                    cx="0"
-                    cy="0"
-                    r="5"
-                    fill="none"
-                    stroke-width="1.75"
-                    stroke="#ffffff"
-                  ></circle>
-                  <circle
-                    cx="0"
-                    cy="0"
-                    r="6"
-                    fill="none"
-                    stroke-width="1.25"
-                    stroke="#000000"
-                  ></circle>
-                </g>
-              </g>
-            </svg>
-          </td>
-          <td>
-            <input
-              type="number"
-              id="okhsv_v_input"
-              min="0"
-              max="100"
-              maxlength="3"
-              class="value_input"
-            />
-          </td>
-        </tr>
-      </table>
+      <img class="slider" id="hsl_h_s" width="256" height="32" />
+      <svg class="slider" width="256" height="32">
+        <g transform="translate(0,16)">
+          <g id="hsl_h_m" transform="translate(0,0)">
+            <circle
+              cx="0"
+              cy="0"
+              r="5"
+              fill="none"
+              stroke-width="1.75"
+              stroke="#ffffff"
+            ></circle>
+            <circle
+              cx="0"
+              cy="0"
+              r="6"
+              fill="none"
+              stroke-width="1.25"
+              stroke="#000000"
+            ></circle>
+          </g>
+        </g>
+      </svg>
+      <input
+        type="number"
+        id="okhsv_h_input"
+        min="0"
+        max="360"
+        maxlength="3"
+        class="slider"
+      />
+    </div>
+
+    <div class="slider">
+      <img class="slider" id="hsl_s_s" width="256" height="32" />
+      <svg class="slider" width="256" height="32">
+        <g transform="translate(0,16)">
+          <g id="hsl_s_m" transform="translate(0,0)">
+            <circle
+              cx="0"
+              cy="0"
+              r="5"
+              fill="none"
+              stroke-width="1.75"
+              stroke="#ffffff"
+            ></circle>
+            <circle
+              cx="0"
+              cy="0"
+              r="6"
+              fill="none"
+              stroke-width="1.25"
+              stroke="#000000"
+            ></circle>
+          </g>
+        </g>
+      </svg>
+      <input
+        type="number"
+        id="okhsv_s_input"
+        min="0"
+        max="100"
+        maxlength="3"
+        class="value_input"
+      />
+    </div>
+
+    <div class="slider">
+      <img class="slider" id="hsl_v_s" width="256" height="32" />
+      <svg class="slider" width="256" height="32">
+        <g transform="translate(0,16)">
+          <g id="hsl_v_m" transform="translate(0,0)">
+            <circle
+              cx="0"
+              cy="0"
+              r="5"
+              fill="none"
+              stroke-width="1.75"
+              stroke="#ffffff"
+            ></circle>
+            <circle
+              cx="0"
+              cy="0"
+              r="6"
+              fill="none"
+              stroke-width="1.25"
+              stroke="#000000"
+            ></circle>
+          </g>
+        </g>
+      </svg>
+      <td>
+        <input
+          type="number"
+          id="okhsv_v_input"
+          min="0"
+          max="100"
+          maxlength="3"
+          class="value_input"
+        />
+      </td>
     </div>
 
     <footer>

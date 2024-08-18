@@ -4,6 +4,7 @@ const { okhsl_to_srgb } = require("./conversion");
 class Slider {
   constructor(okhsv) {
     this.okhsv = okhsv;
+    this.debounceDelay = 16;
   }
 
   setHueComponent(view_id, manipulator_id) {
@@ -24,14 +25,24 @@ class Slider {
       );
     });
 
+    let debounceTimeout;
+
     document.addEventListener("saturationChange", () => {
-      let url = this.render_hue(width, height);
-      this.hue_view.src = url;
+      clearTimeout(debounceTimeout);
+      debounceTimeout = setTimeout(() => {
+        let url = this.render_hue(width, height);
+        this.hue_view.src = url;
+        URL.revokeObjectURL(url);
+      }, this.debounceDelay);
     });
 
     document.addEventListener("valueChange", () => {
-      let url = this.render_hue(width, height);
-      this.hue_view.src = url;
+      clearTimeout(debounceTimeout);
+      debounceTimeout = setTimeout(() => {
+        let url = this.render_hue(width, height);
+        this.hue_view.src = url;
+        URL.revokeObjectURL(url);
+      }, this.debounceDelay);
     });
   }
 
@@ -53,14 +64,24 @@ class Slider {
       );
     });
 
+    let debounceTimeout;
+
     document.addEventListener("hueChange", () => {
-      let url = this.render_saturation(width, height);
-      this.saturation_view.src = url;
+      clearTimeout(debounceTimeout);
+      debounceTimeout = setTimeout(() => {
+        let url = this.render_saturation(width, height);
+        this.saturation_view.src = url;
+        URL.revokeObjectURL(url);
+      }, this.debounceDelay);
     });
 
     document.addEventListener("valueChange", () => {
-      let url = this.render_saturation(width, height);
-      this.saturation_view.src = url;
+      clearTimeout(debounceTimeout);
+      debounceTimeout = setTimeout(() => {
+        let url = this.render_saturation(width, height);
+        this.saturation_view.src = url;
+        URL.revokeObjectURL(url);
+      }, this.debounceDelay);
     });
   }
 
@@ -82,14 +103,24 @@ class Slider {
       );
     });
 
+    let debounceTimeout;
+
     document.addEventListener("hueChange", () => {
-      let url = this.render_value(width, height);
-      this.value_view.src = url;
+      clearTimeout(debounceTimeout);
+      debounceTimeout = setTimeout(() => {
+        let url = this.render_value(width, height);
+        this.value_view.src = url;
+        URL.revokeObjectURL(url);
+      }, this.debounceDelay);
     });
 
     document.addEventListener("saturationChange", () => {
-      let url = this.render_value(width, height);
-      this.value_view.src = url;
+      clearTimeout(debounceTimeout);
+      debounceTimeout = setTimeout(() => {
+        let url = this.render_value(width, height);
+        this.value_view.src = url;
+        URL.revokeObjectURL(url);
+      }, this.debounceDelay);
     });
   }
 

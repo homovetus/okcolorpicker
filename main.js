@@ -26,9 +26,9 @@ const psState = new PSState();
 const okhsv = new HSVState(psState);
 
 let slider = new Slider(okhsv);
-slider.setHueComponent("okhsv_h_slider", "okhsv_h_manipulator");
-slider.setSaturationComponent("okhsv_s_slider", "okhsv_s_manipulator");
-slider.setValueComponent("okhsv_v_slider", "okhsv_v_manipulator");
+slider.setHueComponent("hsl_h_s", "hsl_h_m");
+slider.setSaturationComponent("hsl_s_s", "hsl_s_m");
+slider.setValueComponent("hsl_v_s", "hsl_v_m");
 
 let input = new Input(okhsv);
 input.setHueInput("okhsv_h_input");
@@ -36,7 +36,7 @@ input.setSaturationInput("okhsv_s_input");
 input.setValueInput("okhsv_v_input");
 
 let slider2D = new Slider2D(okhsv);
-slider2D.setSVComponent("okhsv_sv_slider", "okhsv_sv_manipulator");
+slider2D.setSVComponent("hsl_sv_s", "hsl_sv_m");
 
 document.addEventListener(
   "mouseup",

@@ -43,6 +43,7 @@ class Slider2D {
       debounceTimeout = setTimeout(() => {
         let url = this.render_sv(width, height);
         this.view.src = url;
+        URL.revokeObjectURL(url);
       }, debounceDelay);
     });
   }
