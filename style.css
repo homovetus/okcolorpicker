@@ -72,25 +72,25 @@ div.swatch {
 }
 
 .letter {
-        flex: 0 0 auto;
         /* Fixed width for the letter */
-        padding: 0 5px;
+        flex: 0 0 auto;
         /* Add some padding for spacing */
-        height: 25px;
+        padding: 0 5px;
         /* Set a fixed height for consistency */
+        height: 25px;
         display: flex;
         align-items: center;
 }
 
 .slider-container {
-        flex: 1;
         /* Takes up the remaining space */
+        flex: 1;
         display: flex;
         justify-content: center;
-        align-items: center;
         /* Aligns image vertically in the center */
-        height: 20px;
+        align-items: center;
         /* Set the same fixed height */
+        height: 20px;
 }
 
 .responsive-image {
@@ -99,8 +99,8 @@ div.swatch {
         width: 100%;
         /* Matches the height of the container */
         height: 20px;
-        /* Allows distortion to fill the container */
         object-fit: fill;
+        /* Allows distortion to fill the container */
 }
 
 .slider-field {
