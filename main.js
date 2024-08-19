@@ -27,13 +27,13 @@ const okhsv = new HSVState(psState);
 
 let slider = new Slider(okhsv);
 slider.setHueComponent("hsl_h_s", "hsl_h_m");
-slider.setSaturationComponent("hsl_s_s", "hsl_s_m");
-slider.setValueComponent("hsl_v_s", "hsl_v_m");
+slider.setSaturationComponent("hsl_c_s", "hsl_s_m");
+slider.setValueComponent("hsl_l_s", "hsl_v_m");
 
 let input = new Input(okhsv);
-input.setHueInput("okhsv_h_input");
-input.setSaturationInput("okhsv_s_input");
-input.setValueInput("okhsv_v_input");
+input.setHueInput("hsl_h_i");
+input.setSaturationInput("hsl_c_i");
+input.setValueInput("hsl_l_i");
 
 let slider2D = new Slider2D(okhsv);
 slider2D.setSVComponent("hsl_sv_s", "hsl_sv_m");

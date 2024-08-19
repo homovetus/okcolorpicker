@@ -1,16 +1,17 @@
 body {
-    color: white;
-    padding: 0 16px;
+        color: white;
+        padding: 0 16px;
 }
+
 li:before {
-    content: '• ';
-    width: 3em;
+        content: '• ';
+        width: 3em;
 }
 
 #layers {
-    border: 1px solid #808080;
-    border-radius: 4px;
-    padding: 16px;
+        border: 1px solid #808080;
+        border-radius: 4px;
+        padding: 16px;
 }
 
 div.colorpicker {
@@ -20,43 +21,95 @@ div.colorpicker {
         margin-left: auto;
         margin-right: auto;
 }
+
 img.colorpicker {
         position: absolute;
         margin-left: auto;
         margin-right: auto;
 }
+
 svg.colorpicker {
         position: absolute;
         margin-left: auto;
         margin-right: auto;
         pointer-events: none;
 }
+
 div.slider {
         position: relative;
         width: 291px;
         height: 32px;
 }
+
 img.slider {
         position: absolute;
         left: 0px;
 }
+
 svg.slider {
         position: absolute;
         left: 0px;
         pointer-events: none;
 }
-input.slider{
+
+input.slider {
         position: absolute;
         right: 0px;
         width: 25px;
 }
-input.value_input {
-        right: 0px;
-        width: 25px;
-}
+
 div.swatch {
         width: 64px;
         height: 64px;
         display: inline-block;
 }
 
+.container {
+        display: flex;
+        width: 100%;
+        height: 30px;
+        align-items: center;
+}
+
+.letter {
+        flex: 0 0 auto;
+        /* Fixed width for the letter */
+        padding: 0 5px;
+        /* Add some padding for spacing */
+        height: 25px;
+        /* Set a fixed height for consistency */
+        display: flex;
+        align-items: center;
+}
+
+.slider-container {
+        flex: 1;
+        /* Takes up the remaining space */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /* Aligns image vertically in the center */
+        height: 20px;
+        /* Set the same fixed height */
+}
+
+.responsive-image {
+        padding: 0 5px;
+        /* Stretches the width of the image */
+        width: 100%;
+        /* Matches the height of the container */
+        height: 20px;
+        /* Allows distortion to fill the container */
+        object-fit: fill;
+}
+
+.slider-field {
+        width: 43px;
+}
+
+.input-box {
+        flex: 0 0 auto;
+        width: 35px;
+        padding: 5px;
+        height: 25px;
+}

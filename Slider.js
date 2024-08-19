@@ -11,26 +11,24 @@ class Slider {
     this.hue_view = document.getElementById(view_id);
     this.hue_manipulator = document.getElementById(manipulator_id);
 
-    let width = this.hue_view.width;
-    let height = this.hue_view.height;
-
     setup_view_handler(this.hue_view, (x, _) => {
+      let width = this.hue_view.clientWidth;
       this.okhsv.h = clamp(x / width);
     });
 
-    document.addEventListener("hueChange", () => {
-      this.hue_manipulator.setAttribute(
-        "transform",
-        `translate(${width * this.okhsv.h}, 0)`,
-      );
-    });
+    // document.addEventListener("hueChange", () => {
+    //   this.hue_manipulator.setAttribute(
+    //     "transform",
+    //     `translate(${width * this.okhsv.h}, 0)`,
+    //   );
+    // });
 
     let debounceTimeout;
 
     document.addEventListener("saturationChange", () => {
       clearTimeout(debounceTimeout);
       debounceTimeout = setTimeout(() => {
-        let url = this.render_hue(width, height);
+        let url = this.render_hue(100, 1);
         this.hue_view.src = url;
         URL.revokeObjectURL(url);
       }, this.debounceDelay);
@@ -39,7 +37,7 @@ class Slider {
     document.addEventListener("valueChange", () => {
       clearTimeout(debounceTimeout);
       debounceTimeout = setTimeout(() => {
-        let url = this.render_hue(width, height);
+        let url = this.render_hue(100, 1);
         this.hue_view.src = url;
         URL.revokeObjectURL(url);
       }, this.debounceDelay);
@@ -50,26 +48,24 @@ class Slider {
     this.saturation_view = document.getElementById(view_id);
     this.saturation_manipulator = document.getElementById(manipulator_id);
 
-    let width = this.saturation_view.width;
-    let height = this.saturation_view.height;
-
     setup_view_handler(this.saturation_view, (x, _) => {
+      let width = this.saturation_view.clientWidth;
       this.okhsv.s = clamp(x / width);
     });
 
-    document.addEventListener("saturationChange", () => {
-      this.saturation_manipulator.setAttribute(
-        "transform",
-        `translate(${width * this.okhsv.s}, 0)`,
-      );
-    });
+    // document.addEventListener("saturationChange", () => {
+    //   this.saturation_manipulator.setAttribute(
+    //     "transform",
+    //     `translate(${width * this.okhsv.s}, 0)`,
+    //   );
+    // });
 
     let debounceTimeout;
 
     document.addEventListener("hueChange", () => {
       clearTimeout(debounceTimeout);
       debounceTimeout = setTimeout(() => {
-        let url = this.render_saturation(width, height);
+        let url = this.render_saturation(100, 1);
         this.saturation_view.src = url;
         URL.revokeObjectURL(url);
       }, this.debounceDelay);
@@ -78,7 +74,7 @@ class Slider {
     document.addEventListener("valueChange", () => {
       clearTimeout(debounceTimeout);
       debounceTimeout = setTimeout(() => {
-        let url = this.render_saturation(width, height);
+        let url = this.render_saturation(100, 1);
         this.saturation_view.src = url;
         URL.revokeObjectURL(url);
       }, this.debounceDelay);
@@ -89,26 +85,24 @@ class Slider {
     this.value_view = document.getElementById(view_id);
     this.value_manipulator = document.getElementById(manipulator_id);
 
-    let width = this.value_view.width;
-    let height = this.value_view.height;
-
     setup_view_handler(this.value_view, (x, _) => {
+      let width = this.value_view.clientWidth;
       this.okhsv.v = clamp(x / width);
     });
 
-    document.addEventListener("valueChange", () => {
-      this.value_manipulator.setAttribute(
-        "transform",
-        `translate(${width * this.okhsv.v}, 0)`,
-      );
-    });
+    // document.addEventListener("valueChange", () => {
+    //   this.value_manipulator.setAttribute(
+    //     "transform",
+    //     `translate(${width * this.okhsv.v}, 0)`,
+    //   );
+    // });
 
     let debounceTimeout;
 
     document.addEventListener("hueChange", () => {
       clearTimeout(debounceTimeout);
       debounceTimeout = setTimeout(() => {
-        let url = this.render_value(width, height);
+        let url = this.render_value(100, 1);
         this.value_view.src = url;
         URL.revokeObjectURL(url);
       }, this.debounceDelay);
@@ -117,7 +111,7 @@ class Slider {
     document.addEventListener("saturationChange", () => {
       clearTimeout(debounceTimeout);
       debounceTimeout = setTimeout(() => {
-        let url = this.render_value(width, height);
+        let url = this.render_value(100, 1);
         this.value_view.src = url;
         URL.revokeObjectURL(url);
       }, this.debounceDelay);

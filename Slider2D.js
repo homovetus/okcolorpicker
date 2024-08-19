@@ -41,11 +41,17 @@ class Slider2D {
 
       // Set a new debounce timer
       debounceTimeout = setTimeout(() => {
-        let url = this.render_sv(width, height);
+        let url = this.render_sv(50, 200);
         this.view.src = url;
         URL.revokeObjectURL(url);
       }, debounceDelay);
     });
+
+    // document.addEventListener("hueChange", () => {
+    //   let url = this.render_sv(200, 200);
+    //   this.view.src = url;
+    //   URL.revokeObjectURL(url);
+    // });
   }
 
   render_sv(width, height) {
