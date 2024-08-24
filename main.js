@@ -23,8 +23,8 @@ entrypoints.setup({
 });
 
 function resizeInnerSquare() {
-  var outerDiv = document.getElementById("outer-div");
-  var innerDiv = document.getElementById("inner-div");
+  var outerDiv = document.getElementById("outer");
+  var innerDiv = document.getElementById("inner");
   var size = Math.min(outerDiv.offsetWidth, outerDiv.offsetHeight);
   console.log(size);
   innerDiv.style.width = size + "px";
@@ -39,8 +39,8 @@ const okhsv = new HSVState(psState);
 
 let slider = new Slider(okhsv);
 slider.setHueComponent("hsl_h_s", "hsl_h_m");
-slider.setSaturationComponent("hsl_c_s", "hsl_s_m");
-slider.setValueComponent("hsl_l_s", "hsl_v_m");
+slider.setSaturationComponent("hsl_c_s", "hsl_c_m");
+slider.setValueComponent("hsl_l_s", "hsl_l_m");
 
 let input = new Input(okhsv);
 input.setHueInput("hsl_h_i");

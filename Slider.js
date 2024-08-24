@@ -16,12 +16,13 @@ class Slider {
       this.okhsv.h = clamp(x / width);
     });
 
-    // document.addEventListener("hueChange", () => {
-    //   this.hue_manipulator.setAttribute(
-    //     "transform",
-    //     `translate(${width * this.okhsv.h}, 0)`,
-    //   );
-    // });
+    document.addEventListener("hueChange", () => {
+      let width = this.hue_view.clientWidth;
+      this.hue_manipulator.setAttribute(
+        "transform",
+        `translate(${width * this.okhsv.h}, 0)`,
+      );
+    });
 
     let debounceTimeout;
 
@@ -53,12 +54,13 @@ class Slider {
       this.okhsv.s = clamp(x / width);
     });
 
-    // document.addEventListener("saturationChange", () => {
-    //   this.saturation_manipulator.setAttribute(
-    //     "transform",
-    //     `translate(${width * this.okhsv.s}, 0)`,
-    //   );
-    // });
+    document.addEventListener("saturationChange", () => {
+      let width = this.saturation_view.clientWidth;
+      this.saturation_manipulator.setAttribute(
+        "transform",
+        `translate(${width * this.okhsv.s}, 0)`,
+      );
+    });
 
     let debounceTimeout;
 
@@ -90,12 +92,13 @@ class Slider {
       this.okhsv.v = clamp(x / width);
     });
 
-    // document.addEventListener("valueChange", () => {
-    //   this.value_manipulator.setAttribute(
-    //     "transform",
-    //     `translate(${width * this.okhsv.v}, 0)`,
-    //   );
-    // });
+    document.addEventListener("valueChange", () => {
+      let width = this.value_view.clientWidth;
+      this.value_manipulator.setAttribute(
+        "transform",
+        `translate(${width * this.okhsv.v}, 0)`,
+      );
+    });
 
     let debounceTimeout;
 
