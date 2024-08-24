@@ -22,6 +22,18 @@ entrypoints.setup({
   },
 });
 
+function resizeInnerSquare() {
+  var outerDiv = document.getElementById("outer-div");
+  var innerDiv = document.getElementById("inner-div");
+  var size = Math.min(outerDiv.offsetWidth, outerDiv.offsetHeight);
+  console.log(size);
+  innerDiv.style.width = size + "px";
+  innerDiv.style.height = size + "px";
+}
+
+window.addEventListener("resize", resizeInnerSquare);
+resizeInnerSquare();
+
 const psState = new PSState();
 const okhsv = new HSVState(psState);
 

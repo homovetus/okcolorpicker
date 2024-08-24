@@ -6,91 +6,93 @@
     <link rel="stylesheet" href="style.css" />
   </head>
 
-  <div class="container">
-    <div class="label">H</div>
-    <div class="slider-container">
-      <img id="hsl_h_s" alt="hue image" class="responsive-image" />
-    </div>
-    <input id="hsl_h_i" type="number" class="input-box" />
-  </div>
-
-  <div class="container">
-    <div class="label">C</div>
-    <div class="slider-container">
-      <img id="hsl_c_s" alt="chroma image" class="responsive-image" />
-    </div>
-    <input id="hsl_c_i" type="number" class="input-box" />
-  </div>
-
-  <div class="container">
-    <div class="label">L</div>
-    <div class="slider-container">
-      <img id="hsl_l_s" alt="lightness image" class="responsive-image" />
-    </div>
-    <input id="hsl_l_i" type="number" class="input-box" />
-  </div>
-
-  <!-- <div class="slider"> -->
-  <!--   <img class="slider" id="hsl_h_s" width="256" height="32" /> -->
-  <!--   <svg class="slider" width="256" height="32"> -->
-  <!--     <g transform="translate(0,16)"> -->
-  <!--       <g id="hsl_h_m" transform="translate(0,0)"> -->
-  <!--         <circle -->
-  <!--           cx="0" -->
-  <!--           cy="0" -->
-  <!--           r="5" -->
-  <!--           fill="none" -->
-  <!--           stroke-width="1.75" -->
-  <!--           stroke="#ffffff" -->
-  <!--         ></circle> -->
-  <!--         <circle -->
-  <!--           cx="0" -->
-  <!--           cy="0" -->
-  <!--           r="6" -->
-  <!--           fill="none" -->
-  <!--           stroke-width="1.25" -->
-  <!--           stroke="#000000" -->
-  <!--         ></circle> -->
-  <!--       </g> -->
-  <!--     </g> -->
-  <!--   </svg> -->
-  <!--   <input -->
-  <!--     type="number" -->
-  <!--     id="okhsv_h_input" -->
-  <!--     min="0" -->
-  <!--     max="360" -->
-  <!--     maxlength="3" -->
-  <!--     class="slider" -->
-  <!--   /> -->
-  <!-- </div> -->
-
   <body>
-    <div class="colorpicker">
-      <img class="colorpicker" id="hsl_sv_s" width="257" height="257" />
-      <svg class="colorpicker" width="257" height="257">
-        <g transform="translate(0,0)">
-          <g id="hsl_sv_m" transform="translate(0,0)">
-            <circle
-              cx="0"
-              cy="0"
-              r="5"
-              fill="none"
-              stroke-width="1.75"
-              stroke="#ffffff"
-            ></circle>
-            <circle
-              cx="0"
-              cy="0"
-              r="6"
-              fill="none"
-              stroke-width="1.25"
-              stroke="#000000"
-            ></circle>
+    <div class="slider-container">
+      <div class="slider-label">H</div>
+      <div class="image-container">
+        <img id="hsl_h_s" alt="hue image" class="slider-image" />
+      </div>
+      <input id="hsl_h_i" type="number" class="slider-input" />
+    </div>
+
+    <div class="slider-container">
+      <div class="slider-label">C</div>
+      <div class="image-container">
+        <img id="hsl_c_s" alt="chroma image" class="slider-image" />
+      </div>
+      <input id="hsl_c_i" type="number" class="slider-input" />
+    </div>
+
+    <div class="slider-container">
+      <div class="slider-label">L</div>
+      <div class="image-container">
+        <img id="hsl_l_s" alt="lightness image" class="slider-image" />
+      </div>
+      <input id="hsl_l_i" type="number" class="slider-input" />
+    </div>
+
+    <!-- <div class="slider"> -->
+    <!--   <img class="slider" id="hsl_h_s" width="256" height="32" /> -->
+    <!--   <svg class="slider" width="256" height="32"> -->
+    <!--     <g transform="translate(0,16)"> -->
+    <!--       <g id="hsl_h_m" transform="translate(0,0)"> -->
+    <!--         <circle -->
+    <!--           cx="0" -->
+    <!--           cy="0" -->
+    <!--           r="5" -->
+    <!--           fill="none" -->
+    <!--           stroke-width="1.75" -->
+    <!--           stroke="#ffffff" -->
+    <!--         ></circle> -->
+    <!--         <circle -->
+    <!--           cx="0" -->
+    <!--           cy="0" -->
+    <!--           r="6" -->
+    <!--           fill="none" -->
+    <!--           stroke-width="1.25" -->
+    <!--           stroke="#000000" -->
+    <!--         ></circle> -->
+    <!--       </g> -->
+    <!--     </g> -->
+    <!--   </svg> -->
+    <!--   <input -->
+    <!--     type="number" -->
+    <!--     id="okhsv_h_input" -->
+    <!--     min="0" -->
+    <!--     max="360" -->
+    <!--     maxlength="3" -->
+    <!--     class="slider" -->
+    <!--   /> -->
+    <!-- </div> -->
+    <div id="outer-div" class="outer">
+      <div id="inner-div" class="inner">
+        <img id="hsl_sv_s" class="slider-2d" src="icons/light@1x.png" />
+        <svg class="slider-2d">
+          <g transform="translate(0,0)">
+            <g id="hsl_sv_m" transform="translate(0,0)">
+              <circle
+                cx="0"
+                cy="0"
+                r="5"
+                fill="none"
+                stroke-width="1.75"
+                stroke="#ffffff"
+              ></circle>
+              <circle
+                cx="0"
+                cy="0"
+                r="6"
+                fill="none"
+                stroke-width="1.25"
+                stroke="#000000"
+              ></circle>
+            </g>
           </g>
-        </g>
-      </svg>
+        </svg>
+      </div>
     </div>
 
     <footer></footer>
   </body>
 </html>
+

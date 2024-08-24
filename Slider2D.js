@@ -10,15 +10,16 @@ class Slider2D {
     this.view = document.getElementById(view_id);
     this.manipulator = document.getElementById(manipulator);
 
-    let width = this.view.width;
-    let height = this.view.height;
-
     setup_view_handler(this.view, (x, y) => {
+      let width = this.view.clientWidth;
+      let height = this.view.clientHeight;
       this.okhsv.s = clamp(x / width);
       this.okhsv.v = clamp(1 - y / height);
     });
 
     document.addEventListener("saturationChange", () => {
+      let width = this.view.clientWidth;
+      let height = this.view.clientHeight;
       this.manipulator.setAttribute(
         "transform",
         `translate(${width * this.okhsv.s}, ${height * (1 - this.okhsv.v)})`,
@@ -26,6 +27,8 @@ class Slider2D {
     });
 
     document.addEventListener("valueChange", () => {
+      let width = this.view.clientWidth;
+      let height = this.view.clientHeight;
       this.manipulator.setAttribute(
         "transform",
         `translate(${width * this.okhsv.s}, ${height * (1 - this.okhsv.v)})`,
@@ -54,7 +57,9 @@ class Slider2D {
     // });
   }
 
-  render_sv(width, height) {
+  render_sv() {
+    let width = this.view.clientWidth;
+    let height = this.view.clientHeight;
     const pixelCount = width * height;
     let buffer = new ArrayBuffer(pixelCount * 3); // 3 bytes per pixel (RGB)
     let colorArrayView = new Uint8Array(buffer);
