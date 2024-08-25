@@ -1,19 +1,16 @@
 const { entrypoints } = require("uxp");
-const { state } = require("./shared");
+const { state, resizeSquare } = require("./shared");
 const { okhsl_to_srgb } = require("./conversion");
 const PSState = require("./PSState");
 const HSVState = require("./HSVState");
 const Slider = require("./Slider");
 const Slider2D = require("./Slider2D");
+const Swatch = require("./Swatch");
 const Input = require("./Input");
-
-showAlert = () => {
-  alert("This is an alert message");
-};
 
 entrypoints.setup({
   commands: {
-    showAlert,
+    // showAlert,
   },
   panels: {
     vanilla: {
@@ -22,20 +19,12 @@ entrypoints.setup({
   },
 });
 
-function resizeInnerSquare() {
-  var outerDiv = document.getElementById("outer");
-  var innerDiv = document.getElementById("inner");
-  var size = Math.min(outerDiv.offsetWidth, outerDiv.offsetHeight);
-  console.log(size);
-  innerDiv.style.width = size + "px";
-  innerDiv.style.height = size + "px";
-}
-
-window.addEventListener("resize", resizeInnerSquare);
-resizeInnerSquare();
-
 const psState = new PSState();
 const okhsv = new HSVState(psState);
+
+let swatch = new Swatch(okhsv);
+swatch.setForeground("foreground");
+swatch.setBackground("background");
 
 let slider = new Slider(okhsv);
 slider.setHueComponent("hsl_h_s", "hsl_h_m");
@@ -50,14 +39,17 @@ input.setValueInput("hsl_l_i");
 let slider2D = new Slider2D(okhsv);
 slider2D.setSVComponent("hsl_sv_s", "hsl_sv_m");
 
+resizeSquare();
+psState.foregroundColor = psState.foregroundColor;
+psState.backgroundColor = psState.backgroundColor;
+
+window.addEventListener("resize", resizeSquare);
+
 document.addEventListener(
   "mouseup",
   function (_) {
     if (state.mouse_handler !== null) {
       state.mouse_handler = null;
-      let rgb = okhsl_to_srgb(okhsv.h, okhsv.s, okhsv.v);
-      //document.getElementById("swatch").style.backgroundColor =
-      //  `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
     }
   },
   false,
@@ -68,24 +60,7 @@ document.addEventListener(
   function (event) {
     if (state.mouse_handler !== null) {
       state.mouse_handler(event);
-      let rgb = okhsl_to_srgb(okhsv.h, okhsv.s, okhsv.v);
-      //document.getElementById("swatch").style.backgroundColor =
-      //  `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
     }
   },
   false,
 );
-
-//function showLayerNames() {
-//  const allLayers = app.activeDocument.layers;
-//  const allLayerNames = allLayers.map((layer) => layer.name);
-//  const sortedNames = allLayerNames.sort((a, b) =>
-//    a < b ? -1 : a > b ? 1 : 0,
-//  );
-//  document.getElementById("layers").innerHTML = `
-//      <ul>${sortedNames.map((name) => `<li>${name}</li>`).join("")}</ul>`;
-//}
-//
-//document
-//  .getElementById("btnPopulate")
-//  .addEventListener("click", showLayerNames);

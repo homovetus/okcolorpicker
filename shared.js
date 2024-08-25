@@ -54,4 +54,17 @@ function clamp(x) {
   return x < eps ? eps : x > 1 - eps ? 1 - eps : x;
 }
 
-module.exports = { state, setup_view_handler, clamp };
+function resizeSquare() {
+  let outerDiv = document.getElementById("bottom");
+  let innerDiv = document.getElementById("inner");
+  let size = Math.min(outerDiv.offsetWidth, outerDiv.offsetHeight);
+  innerDiv.style.width = size + "px";
+  innerDiv.style.height = size + "px";
+}
+
+module.exports = {
+  state,
+  setup_view_handler,
+  clamp,
+  resizeSquare,
+};

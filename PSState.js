@@ -11,14 +11,14 @@ class PSState {
         return;
       }
       this.foregroundColor = app.foregroundColor;
-    }, 500);
+    }, 100);
 
     setInterval(() => {
       if (app.backgroundColor.isEqual(this._backgroundColor)) {
         return;
       }
       this.backgroundColor = app.backgroundColor;
-    }, 500);
+    }, 100);
   }
 
   get foregroundColor() {

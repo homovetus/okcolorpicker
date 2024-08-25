@@ -6,24 +6,44 @@ body {
         padding: 0px 8px 2px 8px;
 }
 
+#top {
+        align-items: center;
+        display: flex;
+        height: 80px;
+}
+
+#swatches {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+}
+
+#sliders {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        justify-content: space-between;
+}
+
 div.swatch {
-        width: 64px;
-        height: 64px;
         display: inline-block;
+        height: 50px;
+        width: 25px;
 }
 
 div.slider {
         align-items: center;
         display: flex;
-        height: 30px;
+        height: 22px;
         width: 100%;
 }
 
 div.slider-container {
         align-items: center;
         flex: 1;
-        height: 20px;
+        height: 16px;
         justify-content: center;
+        margin: 0 0 0 4px;
         position: relative;
 }
 
@@ -43,19 +63,20 @@ svg.slider {
 
 input.slider {
         flex: 0 0 auto;
-        height: 25px;
-        padding: 5px;
-        width: 35px;
+        height: 20px;
+        margin: 0 0 0 4px;
+        padding: 2px;
+        text-align: center;
+        width: 30px;
 }
 
-div.slider-2d {
-        flex: 1;
-        align-items: center;
+#bottom {
         display: flex;
+        flex: 1;
         justify-content: center;
 }
 
-div.slider-2d-container {
+div.slider-2d {
         align-items: center;
         position: relative;
         background-color: #f0f0f0;
