@@ -1,22 +1,33 @@
 class Swatch {
-  constructor(okhsv) {
-    this.okhsv = okhsv;
+  constructor(psState, okhsv) {
+    this.psState = psState;
+    this.okhcl = okhsv;
   }
 
   setForeground(view_id) {
     this.fg_view = document.getElementById(view_id);
 
-    document.addEventListener("foregroundColorChanged", (c) => {
-      let rgb = c.detail.rgb;
-      this.fg_view.style.backgroundColor = `rgb(${rgb.red}, ${rgb.green}, ${rgb.blue})`;
+    this.okhcl.registerHueChange(() => {
+      let rgb = okhsl_to_srgb(this.okhcl.h, this.okhcl.s, this.okhcl.v);
+      this.fg_view.style.backgroundColor = `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
+    });
+
+    this.okhcl.registerSaturationChange(() => {
+      let rgb = okhsl_to_srgb(this.okhcl.h, this.okhcl.s, this.okhcl.v);
+      this.fg_view.style.backgroundColor = `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
+    });
+
+    this.okhcl.registerValueChange(() => {
+      let rgb = okhsl_to_srgb(this.okhcl.h, this.okhcl.s, this.okhcl.v);
+      this.fg_view.style.backgroundColor = `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
     });
   }
 
   setBackground(view_id) {
     this.bg_view = document.getElementById(view_id);
 
-    document.addEventListener("backgroundColorChanged", (c) => {
-      let rgb = c.detail.rgb;
+    this.psState.registerbgChange(() => {
+      let rgb = this.psState.backgroundColor.rgb;
       this.bg_view.style.backgroundColor = `rgb(${rgb.red}, ${rgb.green}, ${rgb.blue})`;
     });
   }

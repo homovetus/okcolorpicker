@@ -17,7 +17,7 @@ class Slider2D {
       this.okhsv.v = clamp(1 - y / height);
     });
 
-    document.addEventListener("saturationChange", () => {
+    this.okhsv.registerSaturationChange(() => {
       let width = this.view.clientWidth;
       let height = this.view.clientHeight;
       this.manipulator.setAttribute(
@@ -26,7 +26,7 @@ class Slider2D {
       );
     });
 
-    document.addEventListener("valueChange", () => {
+    this.okhsv.registerValueChange(() => {
       let width = this.view.clientWidth;
       let height = this.view.clientHeight;
       this.manipulator.setAttribute(
@@ -36,32 +36,24 @@ class Slider2D {
     });
 
     let debounceTimeout;
-    const debounceDelay = 100; // Adjust the delay as needed (milliseconds)
+    const debounceDelay = 10;
 
-    document.addEventListener("hueChange", () => {
-      // Clear any previous debounce timers
+    this.okhsv.registerHueChange(() => {
       clearTimeout(debounceTimeout);
 
-      // Set a new debounce timer
       debounceTimeout = setTimeout(() => {
         let url = this.render_sv(50, 200);
         this.view.src = url;
         URL.revokeObjectURL(url);
       }, debounceDelay);
     });
-
-    // document.addEventListener("hueChange", () => {
-    //   let url = this.render_sv(200, 200);
-    //   this.view.src = url;
-    //   URL.revokeObjectURL(url);
-    // });
   }
 
   render_sv() {
     let width = this.view.clientWidth;
     let height = this.view.clientHeight;
     const pixelCount = width * height;
-    let buffer = new ArrayBuffer(pixelCount * 3); // 3 bytes per pixel (RGB)
+    let buffer = new ArrayBuffer(pixelCount * 3);
     let colorArrayView = new Uint8Array(buffer);
 
     for (let i = 0; i < height; i++) {
@@ -74,7 +66,6 @@ class Slider2D {
       }
     }
 
-    // Creating ImageBlob metadata
     const imageMetaData = {
       width: width,
       height: height,

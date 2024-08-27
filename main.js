@@ -21,8 +21,9 @@ entrypoints.setup({
 
 const psState = new PSState();
 const okhsv = new HSVState(psState);
+psState.subscribeHCL(okhsv);
 
-let swatch = new Swatch(okhsv);
+let swatch = new Swatch(psState, okhsv);
 swatch.setForeground("foreground");
 swatch.setBackground("background");
 
@@ -40,8 +41,8 @@ let slider2D = new Slider2D(okhsv);
 slider2D.setSVComponent("hsl_sv_s", "hsl_sv_m");
 
 resizeSquare();
-psState.foregroundColor = psState.foregroundColor;
-psState.backgroundColor = psState.backgroundColor;
+// psState.foregroundColor = psState.foregroundColor;
+// psState.backgroundColor = psState.backgroundColor;
 
 window.addEventListener("resize", resizeSquare);
 

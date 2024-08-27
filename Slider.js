@@ -16,7 +16,7 @@ class Slider {
       this.okhsv.h = clamp(x / width);
     });
 
-    document.addEventListener("hueChange", () => {
+    this.okhsv.registerHueChange(() => {
       let width = this.hue_view.clientWidth;
       this.hue_manipulator.setAttribute(
         "transform",
@@ -24,24 +24,16 @@ class Slider {
       );
     });
 
-    let debounceTimeout;
-
-    document.addEventListener("saturationChange", () => {
-      clearTimeout(debounceTimeout);
-      debounceTimeout = setTimeout(() => {
-        let url = this.render_hue(100, 1);
-        this.hue_view.src = url;
-        URL.revokeObjectURL(url);
-      }, this.debounceDelay);
+    this.okhsv.registerSaturationChange(() => {
+      let url = this.render_hue(100, 1);
+      this.hue_view.src = url;
+      URL.revokeObjectURL(url);
     });
 
-    document.addEventListener("valueChange", () => {
-      clearTimeout(debounceTimeout);
-      debounceTimeout = setTimeout(() => {
-        let url = this.render_hue(100, 1);
-        this.hue_view.src = url;
-        URL.revokeObjectURL(url);
-      }, this.debounceDelay);
+    this.okhsv.registerValueChange(() => {
+      let url = this.render_hue(100, 1);
+      this.hue_view.src = url;
+      URL.revokeObjectURL(url);
     });
   }
 
@@ -54,7 +46,7 @@ class Slider {
       this.okhsv.s = clamp(x / width);
     });
 
-    document.addEventListener("saturationChange", () => {
+    this.okhsv.registerSaturationChange(() => {
       let width = this.saturation_view.clientWidth;
       this.saturation_manipulator.setAttribute(
         "transform",
@@ -62,24 +54,16 @@ class Slider {
       );
     });
 
-    let debounceTimeout;
-
-    document.addEventListener("hueChange", () => {
-      clearTimeout(debounceTimeout);
-      debounceTimeout = setTimeout(() => {
-        let url = this.render_saturation(100, 1);
-        this.saturation_view.src = url;
-        URL.revokeObjectURL(url);
-      }, this.debounceDelay);
+    this.okhsv.registerHueChange(() => {
+      let url = this.render_saturation(100, 1);
+      this.saturation_view.src = url;
+      URL.revokeObjectURL(url);
     });
 
-    document.addEventListener("valueChange", () => {
-      clearTimeout(debounceTimeout);
-      debounceTimeout = setTimeout(() => {
-        let url = this.render_saturation(100, 1);
-        this.saturation_view.src = url;
-        URL.revokeObjectURL(url);
-      }, this.debounceDelay);
+    this.okhsv.registerValueChange(() => {
+      let url = this.render_saturation(100, 1);
+      this.saturation_view.src = url;
+      URL.revokeObjectURL(url);
     });
   }
 
@@ -92,7 +76,7 @@ class Slider {
       this.okhsv.v = clamp(x / width);
     });
 
-    document.addEventListener("valueChange", () => {
+    this.okhsv.registerValueChange(() => {
       let width = this.value_view.clientWidth;
       this.value_manipulator.setAttribute(
         "transform",
@@ -100,24 +84,16 @@ class Slider {
       );
     });
 
-    let debounceTimeout;
-
-    document.addEventListener("hueChange", () => {
-      clearTimeout(debounceTimeout);
-      debounceTimeout = setTimeout(() => {
-        let url = this.render_value(100, 1);
-        this.value_view.src = url;
-        URL.revokeObjectURL(url);
-      }, this.debounceDelay);
+    this.okhsv.registerHueChange(() => {
+      let url = this.render_value(100, 1);
+      this.value_view.src = url;
+      URL.revokeObjectURL(url);
     });
 
-    document.addEventListener("saturationChange", () => {
-      clearTimeout(debounceTimeout);
-      debounceTimeout = setTimeout(() => {
-        let url = this.render_value(100, 1);
-        this.value_view.src = url;
-        URL.revokeObjectURL(url);
-      }, this.debounceDelay);
+    this.okhsv.registerSaturationChange(() => {
+      let url = this.render_value(100, 1);
+      this.value_view.src = url;
+      URL.revokeObjectURL(url);
     });
   }
 

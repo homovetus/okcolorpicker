@@ -10,7 +10,7 @@ class Input {
       this.okhsv.h = this.hue_input.value / 360;
     });
 
-    document.addEventListener("hueChange", () => {
+    this.okhsv.registerHueChange(() => {
       this.hue_input.value = Math.round(this.okhsv.h * 360);
     });
   }
@@ -22,7 +22,7 @@ class Input {
       this.okhsv.s = this.saturation_input.value / 100;
     });
 
-    document.addEventListener("saturationChange", () => {
+    this.okhsv.registerSaturationChange(() => {
       this.saturation_input.value = Math.round(this.okhsv.s * 100);
     });
   }
@@ -34,7 +34,7 @@ class Input {
       this.okhsv.v = this.value_input.value / 100;
     });
 
-    document.addEventListener("valueChange", () => {
+    this.okhsv.registerValueChange(() => {
       this.value_input.value = Math.round(this.okhsv.v * 100);
     });
   }

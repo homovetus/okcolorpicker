@@ -1,23 +1,36 @@
 const { srgb_to_okhsl } = require("./conversion");
-const { app } = require("photoshop");
-const { executeAsModal } = require("photoshop").core;
-const { SolidColor } = require("photoshop").app;
 
 class HSVState {
   constructor(psState) {
     let color = psState.foregroundColor.rgb;
     let hsv = srgb_to_okhsl(color.red, color.green, color.blue);
+    this._psState = psState;
     this._hue = hsv[0];
     this._saturation = hsv[1];
     this._value = hsv[2];
+    this.hueChangeCallbacks = [];
+    this.saturationChangeCallbacks = [];
+    this.valueChangeCallbacks = [];
 
-    document.addEventListener("foregroundColorChanged", (c) => {
-      let rgb = c.detail.rgb;
-      let hsv = srgb_to_okhsl(rgb.red, rgb.green, rgb.blue);
+    this._psState.registerfgChange(() => {
+      let color = this._psState.foregroundColor.rgb;
+      let hsv = srgb_to_okhsl(color.red, color.green, color.blue);
       this.h = hsv[0];
       this.s = hsv[1];
       this.v = hsv[2];
     });
+  }
+
+  registerHueChange(callback) {
+    this.hueChangeCallbacks.push(callback);
+  }
+
+  registerSaturationChange(callback) {
+    this.saturationChangeCallbacks.push(callback);
+  }
+
+  registerValueChange(callback) {
+    this.valueChangeCallbacks.push(callback);
   }
 
   get h() {
@@ -26,8 +39,7 @@ class HSVState {
 
   set h(newHue) {
     this._hue = newHue;
-    this._triggerChangeEvent("hueChange", newHue);
-    this._updateForegroud();
+    this.hueChangeCallbacks.forEach((callback) => callback());
   }
 
   get s() {
@@ -36,8 +48,7 @@ class HSVState {
 
   set s(newSaturation) {
     this._saturation = newSaturation;
-    this._triggerChangeEvent("saturationChange", newSaturation);
-    this._updateForegroud();
+    this.saturationChangeCallbacks.forEach((callback) => callback());
   }
 
   get v() {
@@ -46,26 +57,7 @@ class HSVState {
 
   set v(newValue) {
     this._value = newValue;
-    this._triggerChangeEvent("valueChange", newValue);
-    this._updateForegroud();
-  }
-
-  _triggerChangeEvent(eventName, value) {
-    document.dispatchEvent(new CustomEvent(eventName, { detail: value }));
-  }
-
-  async _updateForegroud() {
-    let rgb = okhsl_to_srgb(this.h, this.s, this.v);
-    const newColor = new SolidColor();
-    newColor.rgb.red = rgb[0];
-    newColor.rgb.green = rgb[1];
-    newColor.rgb.blue = rgb[2];
-    let command = () => {
-      app.foregroundColor = newColor;
-    };
-    await executeAsModal(command, {
-      commandName: "Action Commands",
-    });
+    this.valueChangeCallbacks.forEach((callback) => callback());
   }
 }
 
