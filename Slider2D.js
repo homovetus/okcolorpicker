@@ -49,9 +49,7 @@ class Slider2D {
     });
   }
 
-  render_sv() {
-    let width = this.view.clientWidth;
-    let height = this.view.clientHeight;
+  render_sv(width, height) {
     const pixelCount = width * height;
     let buffer = new ArrayBuffer(pixelCount * 3);
     let colorArrayView = new Uint8Array(buffer);

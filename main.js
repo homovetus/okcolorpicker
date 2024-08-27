@@ -41,8 +41,7 @@ let slider2D = new Slider2D(okhsv);
 slider2D.setSVComponent("hsl_sv_s", "hsl_sv_m");
 
 resizeSquare();
-// psState.foregroundColor = psState.foregroundColor;
-// psState.backgroundColor = psState.backgroundColor;
+okhsv.refresh();
 
 window.addEventListener("resize", resizeSquare);
 

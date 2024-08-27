@@ -6,10 +6,16 @@ class Input {
   setHueInput(input) {
     this.hue_input = document.getElementById(input);
 
-    this.hue_input.addEventListener("input", () => {
-      this.okhsv.h = this.hue_input.value / 360;
-    });
+    const debouncedHandler = this._debounce(() => {
+      this.okhsv.h = Math.min(this.hue_input.value / 360, 1);
+    }, 1000); // Adjust the debounce delay as needed
 
+    this.hue_input.addEventListener("input", debouncedHandler);
+    this.hue_input.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        this.okhsv.h = Math.min(this.hue_input.value / 360, 1);
+      }
+    });
     this.okhsv.registerHueChange(() => {
       this.hue_input.value = Math.round(this.okhsv.h * 360);
     });
@@ -19,7 +25,7 @@ class Input {
     this.saturation_input = document.getElementById(input);
 
     this.saturation_input.addEventListener("input", () => {
-      this.okhsv.s = this.saturation_input.value / 100;
+      this.okhsv.s = Math.min(this.saturation_input.value / 100, 1);
     });
 
     this.okhsv.registerSaturationChange(() => {
@@ -37,6 +43,14 @@ class Input {
     this.okhsv.registerValueChange(() => {
       this.value_input.value = Math.round(this.okhsv.v * 100);
     });
+  }
+
+  _debounce(func, delay) {
+    let timeoutId;
+    return (...args) => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => func.apply(this, args), delay);
+    };
   }
 }
 

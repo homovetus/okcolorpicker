@@ -30,6 +30,9 @@ class Swatch {
       let rgb = this.psState.backgroundColor.rgb;
       this.bg_view.style.backgroundColor = `rgb(${rgb.red}, ${rgb.green}, ${rgb.blue})`;
     });
+
+    let rgb = this.psState.backgroundColor.rgb;
+    this.bg_view.style.backgroundColor = `rgb(${rgb.red}, ${rgb.green}, ${rgb.blue})`;
   }
 }
 

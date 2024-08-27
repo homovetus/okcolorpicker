@@ -11,13 +11,19 @@ class HSVState {
     this.hueChangeCallbacks = [];
     this.saturationChangeCallbacks = [];
     this.valueChangeCallbacks = [];
+    this.hueChangeFgCallbacks = [];
+    this.saturationChangeFgCallbacks = [];
+    this.valueChangeFgCallbacks = [];
 
     this._psState.registerfgChange(() => {
       let color = this._psState.foregroundColor.rgb;
       let hsv = srgb_to_okhsl(color.red, color.green, color.blue);
-      this.h = hsv[0];
-      this.s = hsv[1];
-      this.v = hsv[2];
+      this._hue = hsv[0];
+      this._saturation = hsv[1];
+      this._value = hsv[2];
+      this.hueChangeCallbacks.forEach((callback) => callback());
+      this.saturationChangeCallbacks.forEach((callback) => callback());
+      this.valueChangeCallbacks.forEach((callback) => callback());
     });
   }
 
@@ -33,6 +39,24 @@ class HSVState {
     this.valueChangeCallbacks.push(callback);
   }
 
+  whenHueChangeFg(callback) {
+    this.hueChangeFgCallbacks.push(callback);
+  }
+
+  whenSaturationChangeFg(callback) {
+    this.saturationChangeFgCallbacks.push(callback);
+  }
+
+  whenValueChangeFg(callback) {
+    this.valueChangeFgCallbacks.push(callback);
+  }
+
+  refresh() {
+    this.saturationChangeCallbacks.forEach((callback) => callback());
+    this.valueChangeCallbacks.forEach((callback) => callback());
+    this.hueChangeCallbacks.forEach((callback) => callback());
+  }
+
   get h() {
     return this._hue;
   }
@@ -40,6 +64,7 @@ class HSVState {
   set h(newHue) {
     this._hue = newHue;
     this.hueChangeCallbacks.forEach((callback) => callback());
+    this.hueChangeFgCallbacks.forEach((callback) => callback());
   }
 
   get s() {
@@ -49,6 +74,7 @@ class HSVState {
   set s(newSaturation) {
     this._saturation = newSaturation;
     this.saturationChangeCallbacks.forEach((callback) => callback());
+    this.saturationChangeFgCallbacks.forEach((callback) => callback());
   }
 
   get v() {
@@ -58,6 +84,7 @@ class HSVState {
   set v(newValue) {
     this._value = newValue;
     this.valueChangeCallbacks.forEach((callback) => callback());
+    this.valueChangeFgCallbacks.forEach((callback) => callback());
   }
 }
 
