@@ -5,25 +5,35 @@ const { SolidColor } = require("photoshop").app;
 
 class PSState {
   constructor() {
-    this._foregroundColor = app.foregroundColor;
-    this._backgroundColor = app.backgroundColor;
+    this.foregroundColor = app.foregroundColor;
+    this.backgroundColor = app.backgroundColor;
     this._fgChangeCallbacks = [];
     this._bgChangeCallbacks = [];
+    this._lastUpdateTime = Date.now();
+    this._isUpdating = false;
 
-    setInterval(() => {
-      if (app.foregroundColor.isEqual(this._foregroundColor)) {
-        return;
+    this._receivePSColor();
+  }
+
+  async _receivePSColor() {
+    while (true) {
+      await new Promise(resolve => setTimeout(resolve, 150));
+
+      const currentTime = Date.now();
+      if (currentTime - this._lastUpdateTime < 500 || this._isUpdating) {
+        continue;
       }
-      this.foregroundColor = app.foregroundColor;
-      this._fgChangeCallbacks.forEach((callback) => callback());
-    }, 100);
-    setInterval(() => {
-      if (app.backgroundColor.isEqual(this._backgroundColor)) {
-        return;
+
+      if (!app.foregroundColor.isEqual(this.foregroundColor)) {
+        this.foregroundColor = app.foregroundColor;
+        this._fgChangeCallbacks.forEach((callback) => callback());
       }
-      this.backgroundColor = app.backgroundColor;
-      this._bgChangeCallbacks.forEach((callback) => callback());
-    }, 100);
+
+      if (!app.backgroundColor.isEqual(this.backgroundColor)) {
+        this.backgroundColor = app.backgroundColor;
+        this._bgChangeCallbacks.forEach((callback) => callback());
+      }
+    }
   }
 
   registerfgChange(callback) {
@@ -36,53 +46,55 @@ class PSState {
   subscribeHCL(okhcl) {
     this._okhcl = okhcl;
     okhcl.registerHueChange(() => {
-      this._updateForeground();
+      this.foregroundColor = this._getHCL();
       this._updatePSForegroud();
     });
     okhcl.registerSaturationChange(() => {
-      this._updateForeground();
+      this.foregroundColor = this._getHCL();
       this._updatePSForegroud();
     });
     okhcl.registerValueChange(() => {
-      this._updateForeground();
+      this.foregroundColor = this._getHCL();
       this._updatePSForegroud();
     });
   }
-  _updatePSForegroud() {
+
+  async _updatePSForegroud() {
+    if (this._updateTimer) {
+      clearTimeout(this._updateTimer);
+    }
+
+    if (this._isUpdating) {
+      return;
+    }
+
+    this._updateTimer = setTimeout(async () => {
+      this._isUpdating = true;
+      const newColor = this._getHCL();
+
+      try {
+        await executeAsModal(async () => {
+          app.foregroundColor = newColor;
+        }, {
+          commandName: "Change Foreground Color",
+        });
+      } catch (e) {
+        console.error(e);
+      }
+      finally {
+        this._lastUpdateTime = Date.now();
+        this._isUpdating = false;
+      }
+    }, 15);
+  }
+
+  _getHCL(){
     let rgb = okhsl_to_srgb(this._okhcl.h, this._okhcl.s, this._okhcl.v);
     const newColor = new SolidColor();
-    newColor.rgb.red = rgb[0];
-    newColor.rgb.green = rgb[1];
-    newColor.rgb.blue = rgb[2];
-    let command = () => {
-      app.foregroundColor = newColor;
-    };
-    executeAsModal(command, {
-      commandName: "Action Commands",
-    });
-  }
-
-  _updateForeground() {
-    let rgb = okhsl_to_srgb(this._okhcl.h, this._okhcl.s, this._okhcl.v);
-    const newColor = new SolidColor();
-    newColor.rgb.red = rgb[0];
-    newColor.rgb.green = rgb[1];
-    newColor.rgb.blue = rgb[2];
-    this._foregroundColor = newColor;
-  }
-
-  get foregroundColor() {
-    return this._foregroundColor;
-  }
-  get backgroundColor() {
-    return this._backgroundColor;
-  }
-
-  set foregroundColor(color) {
-    this._foregroundColor = color;
-  }
-  set backgroundColor(color) {
-    this._backgroundColor = color;
+    newColor.rgb.red = Math.max(0, Math.min(255, rgb[0]));
+    newColor.rgb.green = Math.max(0, Math.min(255, rgb[1]));
+    newColor.rgb.blue = Math.max(0, Math.min(255, rgb[2]));
+    return newColor;
   }
 }
 
