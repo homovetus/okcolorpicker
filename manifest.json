@@ -1,4 +1,5 @@
 {
+  "manifestVersion": 5,
   "id": "2dd6859e",
   "name": "OK Picker",
   "version": "1.0.0",
@@ -9,48 +10,31 @@
       "minVersion": "25.11.0"
     }
   ],
-  "manifestVersion": 5,
   "entrypoints": [
     {
       "type": "panel",
       "id": "OK Picker",
-      "minimumSize": {
-        "width": 230,
-        "height": 200
-      },
-      "maximumSize": {
-        "width": 1000,
-        "height": 1000
-      },
-      "preferredDockedSize": {
-        "width": 230,
-        "height": 280
-      },
-      "preferredFloatingSize": {
-        "width": 230,
-        "height": 280
-      },
+      "label": "OK Picker",
+      "minimumSize": { "width": 230, "height": 200 },
+      "maximumSize": { "width": 1000, "height": 1000 },
+      "preferredDockedSize": { "width": 230, "height": 280 },
+      "preferredFloatingSize": { "width": 230, "height": 280 },
       "icons": [
         {
-          "width": 32,
-          "height": 32,
-          "path": "icons/icon_D.png",
+          "width": 23,
+          "height": 23,
+          "path": "icons/dark.png",
           "scale": [1, 2],
-          "theme": ["dark", "darkest"],
-          "species": ["generic"]
+          "theme": ["dark", "darkest", "medium"]
         },
         {
-          "width": 32,
-          "height": 32,
-          "path": "icons/icon_N.png",
+          "width": 23,
+          "height": 23,
+          "path": "icons/light.png",
           "scale": [1, 2],
-          "theme": ["lightest", "light"],
-          "species": ["generic"]
+          "theme": ["lightest", "light"]
         }
-      ],
-      "label": {
-        "default": "OK Picker"
-      }
+      ]
     }
   ],
   "icons": [
@@ -59,14 +43,16 @@
       "height": 23,
       "path": "icons/dark.png",
       "scale": [1, 2],
-      "theme": ["darkest", "dark", "medium"]
+      "theme": ["darkest", "dark"],
+      "species": "generic"
     },
     {
       "width": 23,
       "height": 23,
       "path": "icons/light.png",
       "scale": [1, 2],
-      "theme": ["lightest", "light"]
+      "theme": ["lightest", "light"],
+      "species": "generic"
     }
   ]
 }

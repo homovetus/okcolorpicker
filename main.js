@@ -1,4 +1,3 @@
-const { entrypoints } = require("uxp");
 const { state, resizeSquare } = require("./shared");
 const { okhsl_to_srgb } = require("./conversion");
 const PSState = require("./PSState");
@@ -7,15 +6,6 @@ const Slider = require("./Slider");
 const Slider2D = require("./Slider2D");
 const Swatch = require("./Swatch");
 const Input = require("./Input");
-
-entrypoints.setup({
-  commands: {},
-  panels: {
-    "OK Picker": {
-      show(node) {},
-    },
-  },
-});
 
 const psState = new PSState();
 const okhsv = new HSVState(psState);
