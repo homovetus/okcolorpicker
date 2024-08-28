@@ -25,7 +25,7 @@
           "height": 23,
           "path": "icons/dark.png",
           "scale": [1, 2],
-          "theme": ["dark", "darkest", "medium"]
+          "theme": ["dark", "darkest"]
         },
         {
           "width": 23,
@@ -43,16 +43,14 @@
       "height": 23,
       "path": "icons/dark.png",
       "scale": [1, 2],
-      "theme": ["darkest", "dark"],
-      "species": "generic"
+      "theme": ["darkest", "dark"]
     },
     {
       "width": 23,
       "height": 23,
       "path": "icons/light.png",
       "scale": [1, 2],
-      "theme": ["lightest", "light"],
-      "species": "generic"
+      "theme": ["lightest", "light"]
     }
   ]
 }
