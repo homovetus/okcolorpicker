@@ -1,7 +1,7 @@
 {
-  "id": "com.homovetus.colorpicker",
-  "name": "colorpicker",
-  "version": "0.0.1",
+  "id": "2dd6859e",
+  "name": "OK Picker",
+  "version": "1.0.0",
   "main": "index.html",
   "host": [
     {
@@ -12,28 +12,23 @@
   "manifestVersion": 5,
   "entrypoints": [
     {
-      "type": "command",
-      "id": "showAlert",
-      "label": "Show alert"
-    },
-    {
       "type": "panel",
-      "id": "vanilla",
+      "id": "OK Picker",
       "minimumSize": {
         "width": 230,
         "height": 200
       },
       "maximumSize": {
-        "width": 2000,
-        "height": 2000
+        "width": 1000,
+        "height": 1000
       },
       "preferredDockedSize": {
         "width": 230,
-        "height": 300
+        "height": 280
       },
       "preferredFloatingSize": {
         "width": 230,
-        "height": 300
+        "height": 280
       },
       "icons": [
         {
@@ -54,7 +49,7 @@
         }
       ],
       "label": {
-        "default": "Starter Panel"
+        "default": "OK Picker"
       }
     }
   ],
@@ -75,4 +70,3 @@
     }
   ]
 }
-

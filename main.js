@@ -9,11 +9,9 @@ const Swatch = require("./Swatch");
 const Input = require("./Input");
 
 entrypoints.setup({
-  commands: {
-    // showAlert,
-  },
+  commands: {},
   panels: {
-    vanilla: {
+    "OK Picker": {
       show(node) {},
     },
   },
