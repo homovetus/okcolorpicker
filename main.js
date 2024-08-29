@@ -40,7 +40,7 @@ document.addEventListener(
       state.mouse_handler = null;
     }
   },
-  false,
+  false
 );
 
 document.addEventListener(
@@ -50,5 +50,5 @@ document.addEventListener(
       state.mouse_handler(event);
     }
   },
-  false,
+  false
 );

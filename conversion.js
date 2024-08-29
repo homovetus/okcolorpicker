@@ -279,7 +279,7 @@ function find_cusp(a, b) {
   // Convert to linear sRGB to find the first point where at least one of r,g or b >= 1:
   let rgb_at_max = oklab_to_linear_srgb(1, S_cusp * a, S_cusp * b);
   let L_cusp = Math.cbrt(
-    1 / Math.max(Math.max(rgb_at_max[0], rgb_at_max[1]), rgb_at_max[2]),
+    1 / Math.max(Math.max(rgb_at_max[0], rgb_at_max[1]), rgb_at_max[2])
   );
   let C_cusp = L_cusp * S_cusp;
 
@@ -462,8 +462,8 @@ function get_Cs(L, a_, b_) {
       k *
       Math.sqrt(
         Math.sqrt(
-          1 / (1 / (C_a * C_a * C_a * C_a) + 1 / (C_b * C_b * C_b * C_b)),
-        ),
+          1 / (1 / (C_a * C_a * C_a * C_a) + 1 / (C_b * C_b * C_b * C_b))
+        )
       );
   }
 
@@ -526,7 +526,7 @@ function srgb_to_okhsl(r, g, b) {
   let lab = linear_srgb_to_oklab(
     srgb_transfer_function_inv(r / 255),
     srgb_transfer_function_inv(g / 255),
-    srgb_transfer_function_inv(b / 255),
+    srgb_transfer_function_inv(b / 255)
   );
 
   let C = Math.sqrt(lab[1] * lab[1] + lab[2] * lab[2]);
@@ -593,7 +593,7 @@ function okhsv_to_srgb(h, s, v) {
 
   let rgb_scale = oklab_to_linear_srgb(L_vt, a_ * C_vt, b_ * C_vt);
   let scale_L = Math.cbrt(
-    1 / Math.max(rgb_scale[0], rgb_scale[1], rgb_scale[2], 0),
+    1 / Math.max(rgb_scale[0], rgb_scale[1], rgb_scale[2], 0)
   );
 
   // remove to see effect without rescaling
@@ -612,7 +612,7 @@ function srgb_to_okhsv(r, g, b) {
   let lab = linear_srgb_to_oklab(
     srgb_transfer_function_inv(r / 255),
     srgb_transfer_function_inv(g / 255),
-    srgb_transfer_function_inv(b / 255),
+    srgb_transfer_function_inv(b / 255)
   );
 
   let C = Math.sqrt(lab[1] * lab[1] + lab[2] * lab[2]);
@@ -637,7 +637,7 @@ function srgb_to_okhsv(r, g, b) {
 
   rgb_scale = oklab_to_linear_srgb(L_vt, a_ * C_vt, b_ * C_vt);
   scale_L = Math.cbrt(
-    1 / Math.max(rgb_scale[0], rgb_scale[1], rgb_scale[2], 0),
+    1 / Math.max(rgb_scale[0], rgb_scale[1], rgb_scale[2], 0)
   );
 
   L = L / scale_L;

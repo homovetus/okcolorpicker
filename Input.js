@@ -8,7 +8,7 @@ class Input {
 
     const debouncedHandler = this._debounce(() => {
       this.okhsv.h = Math.min(this.hue_input.value / 360, 1);
-    }, 1000); // Adjust the debounce delay as needed
+    }, 1000);
 
     this.hue_input.addEventListener("input", debouncedHandler);
     this.hue_input.addEventListener("keydown", (event) => {

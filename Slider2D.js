@@ -22,7 +22,7 @@ class Slider2D {
       let height = this.view.clientHeight;
       this.manipulator.setAttribute(
         "transform",
-        `translate(${width * this.okhsv.s}, ${height * (1 - this.okhsv.v)})`,
+        `translate(${width * this.okhsv.s}, ${height * (1 - this.okhsv.v)})`
       );
     });
 
@@ -31,7 +31,7 @@ class Slider2D {
       let height = this.view.clientHeight;
       this.manipulator.setAttribute(
         "transform",
-        `translate(${width * this.okhsv.s}, ${height * (1 - this.okhsv.v)})`,
+        `translate(${width * this.okhsv.s}, ${height * (1 - this.okhsv.v)})`
       );
     });
 

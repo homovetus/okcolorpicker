@@ -1,20 +1,34 @@
-# Introduction
+# OK Picker
 
-This starter plugin is a good place to get started when developing for Photoshop. It does not rely on any frameworks or build steps -- hence the name "Vanilla".
+OK Picker is a color picker plugin for Adobe Photoshop, utilizing the OKHsl color space for improved color selection and manipulation.
+
+## Features
+
+- Interactive color selection using Hue, Saturation, and Lightness sliders
+- 2D color picker for simultaneous Saturation and Value adjustment
+- Real-time synchronization with Photoshop's foreground color
+- Display of current foreground and background colors
+- Numeric input for precise color values
 
 ## Compatibility
 
-Since Photoshop 
+This plugin is compatible with Adobe Photoshop version 25.11.0 and later.
 
-## Getting Started
+## Installation
 
-Make sure Photoshop is up and running first. First, add the plugin to the "Developer Workspace" in the UXP Developer Tools (UDT) application.
-  * If you selected "Create Plugin..." earlier, it will have already be there with the plugin ID and name you specified. 
-  * Otherwise, click "Add Plugin" and select the `manifest.json` file in the corresponding plugin folder.
+1. Open the UXP Developer Tools (UDT) application.
+2. Click "Add Plugin" and select the `manifest.json` file in the plugin folder.
+3. Click the ••• button next to the corresponding workspace entry, and click "Load".
 
-Click the ••• button next to the corresponding workspace entry, and click "Load". Switch over to Photoshop, and the plugin's panel will be running. 
+## Usage
 
-## Documentation
+1. Launch Photoshop and ensure the plugin is loaded.
+2. The plugin panel will appear in Photoshop's interface.
+3. Use the sliders, 2D picker, or numeric inputs to select your desired color.
+4. The selected color will automatically update as Photoshop's foreground color.
 
-* Read more about creating and debugging plugins using the UDT application [here](https://developer.adobe.com/photoshop/uxp/2022/guides/devtool/udt-walkthrough/). 
-* We build on this starter template and show you how to [edit a document](https://developer.adobe.com/photoshop/uxp/2022/guides/getting-started/editing-the-document/) and [write a file](https://developer.adobe.com/photoshop/uxp/2022/guides/getting-started/writing-a-file/) using UXP. 
+## Development
+
+This plugin is built using vanilla JavaScript and doesn't rely on any external frameworks. To modify or extend the plugin:
+
+1. Edit the relevant JavaScript files (`main.js`, `Slider.js`, `Slider2D.js`, etc.).

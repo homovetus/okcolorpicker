@@ -32,7 +32,7 @@ function setup_view_handler(view, handler) {
       state.mouse_handler = mouse_handler;
       mouse_handler(event);
     },
-    false,
+    false
   );
 
   view.addEventListener(
@@ -45,7 +45,7 @@ function setup_view_handler(view, handler) {
         state.touch_handler = null;
       }
     },
-    false,
+    false
   );
 }
 

@@ -20,7 +20,7 @@ class Slider {
       let width = this.hue_view.clientWidth;
       this.hue_manipulator.setAttribute(
         "transform",
-        `translate(${width * this.okhsv.h}, 0)`,
+        `translate(${width * this.okhsv.h}, 0)`
       );
     });
 
@@ -50,7 +50,7 @@ class Slider {
       let width = this.saturation_view.clientWidth;
       this.saturation_manipulator.setAttribute(
         "transform",
-        `translate(${width * this.okhsv.s}, 0)`,
+        `translate(${width * this.okhsv.s}, 0)`
       );
     });
 
@@ -80,7 +80,7 @@ class Slider {
       let width = this.value_view.clientWidth;
       this.value_manipulator.setAttribute(
         "transform",
-        `translate(${width * this.okhsv.v}, 0)`,
+        `translate(${width * this.okhsv.v}, 0)`
       );
     });
 

@@ -79,7 +79,7 @@ class PSState {
           },
           {
             commandName: "Change Foreground Color",
-          },
+          }
         );
       } catch (e) {
         console.error(e);
