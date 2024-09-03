@@ -3,7 +3,7 @@ const state = {
   touch_handler: null,
 };
 
-function setup_view_handler(view, handler) {
+function setup_view_handler(view, psState, handler) {
   let mouse_handler = function (event) {
     event.preventDefault();
 
@@ -29,6 +29,7 @@ function setup_view_handler(view, handler) {
   view.addEventListener(
     "mousedown",
     function (event) {
+      psState.receive = false;
       state.mouse_handler = mouse_handler;
       mouse_handler(event);
     },
@@ -39,6 +40,7 @@ function setup_view_handler(view, handler) {
     "touchstart",
     function (event) {
       if (event.touches.length === 1) {
+        psState.receive = false;
         state.touch_handler = touch_handler;
         touch_handler(event);
       } else {

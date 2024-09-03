@@ -2,7 +2,8 @@ const { setup_view_handler, clamp } = require("./shared");
 const { okhsl_to_srgb } = require("./conversion");
 
 class Slider {
-  constructor(okhsl) {
+  constructor(psState, okhsl) {
+    this._psState = psState;
     this.okhsl = okhsl;
     this.debounceDelay = 16;
   }
@@ -11,7 +12,7 @@ class Slider {
     this.hue_view = document.getElementById(view_id);
     this.hue_manipulator = document.getElementById(manipulator_id);
 
-    setup_view_handler(this.hue_view, (x, _) => {
+    setup_view_handler(this.hue_view, this._psState, (x, _) => {
       let width = this.hue_view.clientWidth;
       this.okhsl.h = clamp(x / width);
     });
@@ -41,7 +42,7 @@ class Slider {
     this.saturation_view = document.getElementById(view_id);
     this.saturation_manipulator = document.getElementById(manipulator_id);
 
-    setup_view_handler(this.saturation_view, (x, _) => {
+    setup_view_handler(this.saturation_view, this._psState, (x, _) => {
       let width = this.saturation_view.clientWidth;
       this.okhsl.s = clamp(x / width);
     });
@@ -71,7 +72,7 @@ class Slider {
     this.lightness_view = document.getElementById(view_id);
     this.lightness_manipulator = document.getElementById(manipulator_id);
 
-    setup_view_handler(this.lightness_view, (x, _) => {
+    setup_view_handler(this.lightness_view, this._psState, (x, _) => {
       let width = this.lightness_view.clientWidth;
       this.okhsl.l = clamp(x / width);
     });

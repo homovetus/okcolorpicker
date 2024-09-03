@@ -2,7 +2,8 @@ const { setup_view_handler, clamp } = require("./shared");
 const { okhsl_to_srgb } = require("./conversion");
 
 class Slider2D {
-  constructor(okhsl) {
+  constructor(psState, okhsl) {
+    this._psState = psState;
     this.okhsl = okhsl;
   }
 
@@ -10,7 +11,7 @@ class Slider2D {
     this.view = document.getElementById(view_id);
     this.manipulator = document.getElementById(manipulator);
 
-    setup_view_handler(this.view, (x, y) => {
+    setup_view_handler(this.view, this._psState, (x, y) => {
       let width = this.view.clientWidth;
       let height = this.view.clientHeight;
       this.okhsl.s = clamp(x / width);

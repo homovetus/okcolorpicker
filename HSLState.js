@@ -1,13 +1,14 @@
-const { srgb_to_okhsl } = require("./conversion");
+const { srgb_to_okhsl, okhsl_to_srgb } = require("./conversion");
+const { SolidColor } = require("photoshop").app;
 
-class HSVState {
+class HSLState {
   constructor(psState) {
     let color = psState.foregroundColor.rgb;
-    let hsv = srgb_to_okhsl(color.red, color.green, color.blue);
+    let hsl = srgb_to_okhsl(color.red, color.green, color.blue);
     this._psState = psState;
-    this._hue = hsv[0];
-    this._saturation = hsv[1];
-    this._lightness = hsv[2];
+    this._hue = hsl[0];
+    this._saturation = hsl[1];
+    this._lightness = hsl[2];
     this.hueChangeCallbacks = [];
     this.saturationChangeCallbacks = [];
     this.lightnessChangeCallbacks = [];
@@ -17,10 +18,10 @@ class HSVState {
 
     this._psState.registerfgChange(() => {
       let color = this._psState.foregroundColor.rgb;
-      let hsv = srgb_to_okhsl(color.red, color.green, color.blue);
-      this._hue = hsv[0];
-      this._saturation = hsv[1];
-      this._lightness = hsv[2];
+      let hsl = srgb_to_okhsl(color.red, color.green, color.blue);
+      this._hue = hsl[0];
+      this._saturation = hsl[1];
+      this._lightness = hsl[2];
       this.hueChangeCallbacks.forEach((callback) => callback());
       this.saturationChangeCallbacks.forEach((callback) => callback());
       this.lightnessChangeCallbacks.forEach((callback) => callback());
@@ -57,6 +58,15 @@ class HSVState {
     this.hueChangeCallbacks.forEach((callback) => callback());
   }
 
+  getSolidColor() {
+    let rgb = okhsl_to_srgb(this._hue, this._saturation, this._lightness);
+    const newColor = new SolidColor();
+    newColor.rgb.red = Math.max(0, Math.min(255, rgb[0]));
+    newColor.rgb.green = Math.max(0, Math.min(255, rgb[1]));
+    newColor.rgb.blue = Math.max(0, Math.min(255, rgb[2]));
+    return newColor;
+  }
+
   get h() {
     return this._hue;
   }
@@ -88,4 +98,4 @@ class HSVState {
   }
 }
 
-module.exports = HSVState;
+module.exports = HSLState;

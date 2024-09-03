@@ -1,13 +1,12 @@
 const app = require("photoshop").app;
 const { state } = require("./shared");
 const { executeAsModal } = require("photoshop").core;
-const { okhsl_to_srgb } = require("./conversion");
-const { SolidColor } = require("photoshop").app;
 
 class PSState {
   constructor() {
     this.foregroundColor = app.foregroundColor;
     this.backgroundColor = app.backgroundColor;
+    this.receive = true;
     this._fgChangeCallbacks = [];
     this._bgChangeCallbacks = [];
     this._isUpdating = false;
@@ -19,14 +18,11 @@ class PSState {
     while (true) {
       await new Promise((resolve) => setTimeout(resolve, 150));
 
-      if (this._isUpdating) {
+      if (this._isUpdating || !this.receive) {
         continue;
       }
 
-      if (
-        !app.foregroundColor.isEqual(this.foregroundColor) &&
-        state.mouse_handler === null
-      ) {
+      if (!app.foregroundColor.isEqual(this.foregroundColor)) {
         this.foregroundColor = app.foregroundColor;
         this._fgChangeCallbacks.forEach((callback) => callback());
       }
@@ -48,23 +44,23 @@ class PSState {
   subscribeHSL(okhsl) {
     this._okhsl = okhsl;
     okhsl.whenHueChangeFg(() => {
-      this.foregroundColor = this._getHCL();
+      this.foregroundColor = this._okhsl.getSolidColor();
     });
     okhsl.whenSaturationChangeFg(() => {
-      this.foregroundColor = this._getHCL();
+      this.foregroundColor = this._okhsl.getSolidColor();
     });
     okhsl.whenLightnessChangeFg(() => {
-      this.foregroundColor = this._getHCL();
+      this.foregroundColor = this._okhsl.getSolidColor();
     });
   }
 
-  async _updatePSForegroud() {
+  async updatePSForegroud() {
     if (this._isUpdating) {
       return;
     }
 
     this._isUpdating = true;
-    const newColor = this._getHCL();
+    const newColor = this._okhsl.getSolidColor();
 
     try {
       await executeAsModal(
@@ -80,15 +76,6 @@ class PSState {
     } finally {
       this._isUpdating = false;
     }
-  }
-
-  _getHCL() {
-    let rgb = okhsl_to_srgb(this._okhsl.h, this._okhsl.s, this._okhsl.l);
-    const newColor = new SolidColor();
-    newColor.rgb.red = Math.max(0, Math.min(255, rgb[0]));
-    newColor.rgb.green = Math.max(0, Math.min(255, rgb[1]));
-    newColor.rgb.blue = Math.max(0, Math.min(255, rgb[2]));
-    return newColor;
   }
 }
 

@@ -1,56 +1,88 @@
 class Input {
-  constructor(okhsl) {
-    this.okhsl = okhsl;
+  constructor(psState, okhsl) {
+    this._psState = psState;
+    this._okhsl = okhsl;
   }
 
   setHueInput(input) {
     this.hue_input = document.getElementById(input);
 
-    const debouncedHandler = this._debounce(() => {
-      this.okhsl.h = Math.min(this.hue_input.value / 360, 1);
-    }, 1000);
+    this.hue_input.addEventListener("focus", () => {
+      this._psState.receive = false;
+    });
 
-    this.hue_input.addEventListener("input", debouncedHandler);
+    this.hue_input.addEventListener("input", () => {
+      this._okhsl.h = this.hue_input.value / 360;
+    });
+
     this.hue_input.addEventListener("keydown", (event) => {
       if (event.key === "Enter") {
-        this.okhsl.h = Math.min(this.hue_input.value / 360, 1);
+        this.hue_input.blur();
       }
     });
-    this.okhsl.registerHueChange(() => {
-      this.hue_input.value = Math.round(this.okhsl.h * 360);
+
+    this.hue_input.addEventListener("blur", () => {
+      this._psState.updatePSForegroud();
+      this._psState.receive = true;
+    });
+
+    this._okhsl.registerHueChange(() => {
+      this.hue_input.value = Math.round(this._okhsl.h * 360);
     });
   }
 
   setSaturationInput(input) {
     this.saturation_input = document.getElementById(input);
 
-    this.saturation_input.addEventListener("input", () => {
-      this.okhsl.s = Math.min(this.saturation_input.value / 100, 1);
+    this.saturation_input.addEventListener("focus", () => {
+      this._psState.receive = false;
     });
 
-    this.okhsl.registerSaturationChange(() => {
-      this.saturation_input.value = Math.round(this.okhsl.s * 100);
+    this.saturation_input.addEventListener("input", () => {
+      this._okhsl.s = this.saturation_input.value / 100;
+    });
+
+    this.saturation_input.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        this.saturation_input.blur();
+      }
+    });
+
+    this.saturation_input.addEventListener("blur", () => {
+      this._psState.updatePSForegroud();
+      this._psState.receive = true;
+    });
+
+    this._okhsl.registerSaturationChange(() => {
+      this.saturation_input.value = Math.round(this._okhsl.s * 100);
     });
   }
 
   setLightnessInput(input) {
     this.lightness_input = document.getElementById(input);
 
+    this.lightness_input.addEventListener("focus", () => {
+      this._psState.receive = false;
+    });
+
     this.lightness_input.addEventListener("input", () => {
-      this.okhsl.v = this.lightness_input.value / 100;
+      this._okhsl.l = this.lightness_input.value / 100;
     });
 
-    this.okhsl.registerLightnessChange(() => {
-      this.lightness_input.value = Math.round(this.okhsl.l * 100);
+    this.lightness_input.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        this.lightness_input.blur();
+      }
     });
-  }
 
-  _debounce(func, delay) {
-    let timeoutId;
-    return (...args) => {
-      clearTimeout(timeoutId);
-      timeoutId = setTimeout(() => func.apply(this, args), delay);
-    };
+    this.lightness_input.addEventListener("blur", () => {
+      this._psState.updatePSForegroud();
+      this._psState.receive = true;
+    });
+
+    this._okhsl.registerLightnessChange(() => {
+      this.lightness_input.value = Math.round(this._okhsl.l * 100);
+    });
   }
 }
 
