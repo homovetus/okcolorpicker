@@ -1,4 +1,5 @@
 const app = require("photoshop").app;
+const { state } = require("./shared");
 const { executeAsModal } = require("photoshop").core;
 const { okhsl_to_srgb } = require("./conversion");
 const { SolidColor } = require("photoshop").app;
@@ -9,22 +10,23 @@ class PSState {
     this.backgroundColor = app.backgroundColor;
     this._fgChangeCallbacks = [];
     this._bgChangeCallbacks = [];
-    this._lastUpdateTime = Date.now();
     this._isUpdating = false;
 
-    this._receivePSColor();
+    this._startReceiving();
   }
 
-  async _receivePSColor() {
+  async _startReceiving() {
     while (true) {
       await new Promise((resolve) => setTimeout(resolve, 150));
 
-      const currentTime = Date.now();
-      if (currentTime - this._lastUpdateTime < 500 || this._isUpdating) {
+      if (this._isUpdating) {
         continue;
       }
 
-      if (!app.foregroundColor.isEqual(this.foregroundColor)) {
+      if (
+        !app.foregroundColor.isEqual(this.foregroundColor) &&
+        state.mouse_handler === null
+      ) {
         this.foregroundColor = app.foregroundColor;
         this._fgChangeCallbacks.forEach((callback) => callback());
       }
@@ -43,55 +45,45 @@ class PSState {
     this._bgChangeCallbacks.push(callback);
   }
 
-  subscribeHCL(okhcl) {
-    this._okhcl = okhcl;
-    okhcl.whenHueChangeFg(() => {
+  subscribeHSL(okhsl) {
+    this._okhsl = okhsl;
+    okhsl.whenHueChangeFg(() => {
       this.foregroundColor = this._getHCL();
-      this._updatePSForegroud();
     });
-    okhcl.whenSaturationChangeFg(() => {
+    okhsl.whenSaturationChangeFg(() => {
       this.foregroundColor = this._getHCL();
-      this._updatePSForegroud();
     });
-    okhcl.whenValueChangeFg(() => {
+    okhsl.whenLightnessChangeFg(() => {
       this.foregroundColor = this._getHCL();
-      this._updatePSForegroud();
     });
   }
 
   async _updatePSForegroud() {
-    if (this._updateTimer) {
-      clearTimeout(this._updateTimer);
-    }
-
     if (this._isUpdating) {
       return;
     }
 
-    this._updateTimer = setTimeout(async () => {
-      this._isUpdating = true;
-      const newColor = this._getHCL();
+    this._isUpdating = true;
+    const newColor = this._getHCL();
 
-      try {
-        await executeAsModal(
-          async () => {
-            app.foregroundColor = newColor;
-          },
-          {
-            commandName: "Change Foreground Color",
-          }
-        );
-      } catch (e) {
-        console.error(e);
-      } finally {
-        this._lastUpdateTime = Date.now();
-        this._isUpdating = false;
-      }
-    }, 15);
+    try {
+      await executeAsModal(
+        async () => {
+          app.foregroundColor = newColor;
+        },
+        {
+          commandName: "Change Foreground Color",
+        }
+      );
+    } catch (e) {
+      console.error(e);
+    } finally {
+      this._isUpdating = false;
+    }
   }
 
   _getHCL() {
-    let rgb = okhsl_to_srgb(this._okhcl.h, this._okhcl.s, this._okhcl.v);
+    let rgb = okhsl_to_srgb(this._okhsl.h, this._okhsl.s, this._okhsl.l);
     const newColor = new SolidColor();
     newColor.rgb.red = Math.max(0, Math.min(255, rgb[0]));
     newColor.rgb.green = Math.max(0, Math.min(255, rgb[1]));

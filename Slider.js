@@ -2,8 +2,8 @@ const { setup_view_handler, clamp } = require("./shared");
 const { okhsl_to_srgb } = require("./conversion");
 
 class Slider {
-  constructor(okhsv) {
-    this.okhsv = okhsv;
+  constructor(okhsl) {
+    this.okhsl = okhsl;
     this.debounceDelay = 16;
   }
 
@@ -13,24 +13,24 @@ class Slider {
 
     setup_view_handler(this.hue_view, (x, _) => {
       let width = this.hue_view.clientWidth;
-      this.okhsv.h = clamp(x / width);
+      this.okhsl.h = clamp(x / width);
     });
 
-    this.okhsv.registerHueChange(() => {
+    this.okhsl.registerHueChange(() => {
       let width = this.hue_view.clientWidth;
       this.hue_manipulator.setAttribute(
         "transform",
-        `translate(${width * this.okhsv.h}, 0)`
+        `translate(${width * this.okhsl.h}, 0)`
       );
     });
 
-    this.okhsv.registerSaturationChange(() => {
+    this.okhsl.registerSaturationChange(() => {
       let url = this.render_hue(100, 1);
       this.hue_view.src = url;
       URL.revokeObjectURL(url);
     });
 
-    this.okhsv.registerValueChange(() => {
+    this.okhsl.registerLightnessChange(() => {
       let url = this.render_hue(100, 1);
       this.hue_view.src = url;
       URL.revokeObjectURL(url);
@@ -43,56 +43,56 @@ class Slider {
 
     setup_view_handler(this.saturation_view, (x, _) => {
       let width = this.saturation_view.clientWidth;
-      this.okhsv.s = clamp(x / width);
+      this.okhsl.s = clamp(x / width);
     });
 
-    this.okhsv.registerSaturationChange(() => {
+    this.okhsl.registerSaturationChange(() => {
       let width = this.saturation_view.clientWidth;
       this.saturation_manipulator.setAttribute(
         "transform",
-        `translate(${width * this.okhsv.s}, 0)`
+        `translate(${width * this.okhsl.s}, 0)`
       );
     });
 
-    this.okhsv.registerHueChange(() => {
+    this.okhsl.registerHueChange(() => {
       let url = this.render_saturation(100, 1);
       this.saturation_view.src = url;
       URL.revokeObjectURL(url);
     });
 
-    this.okhsv.registerValueChange(() => {
+    this.okhsl.registerLightnessChange(() => {
       let url = this.render_saturation(100, 1);
       this.saturation_view.src = url;
       URL.revokeObjectURL(url);
     });
   }
 
-  setValueComponent(view_id, manipulator_id) {
-    this.value_view = document.getElementById(view_id);
-    this.value_manipulator = document.getElementById(manipulator_id);
+  setLightnessComponent(view_id, manipulator_id) {
+    this.lightness_view = document.getElementById(view_id);
+    this.lightness_manipulator = document.getElementById(manipulator_id);
 
-    setup_view_handler(this.value_view, (x, _) => {
-      let width = this.value_view.clientWidth;
-      this.okhsv.v = clamp(x / width);
+    setup_view_handler(this.lightness_view, (x, _) => {
+      let width = this.lightness_view.clientWidth;
+      this.okhsl.l = clamp(x / width);
     });
 
-    this.okhsv.registerValueChange(() => {
-      let width = this.value_view.clientWidth;
-      this.value_manipulator.setAttribute(
+    this.okhsl.registerLightnessChange(() => {
+      let width = this.lightness_view.clientWidth;
+      this.lightness_manipulator.setAttribute(
         "transform",
-        `translate(${width * this.okhsv.v}, 0)`
+        `translate(${width * this.okhsl.l}, 0)`
       );
     });
 
-    this.okhsv.registerHueChange(() => {
-      let url = this.render_value(100, 1);
-      this.value_view.src = url;
+    this.okhsl.registerHueChange(() => {
+      let url = this.render_lightness(100, 1);
+      this.lightness_view.src = url;
       URL.revokeObjectURL(url);
     });
 
-    this.okhsv.registerSaturationChange(() => {
-      let url = this.render_value(100, 1);
-      this.value_view.src = url;
+    this.okhsl.registerSaturationChange(() => {
+      let url = this.render_lightness(100, 1);
+      this.lightness_view.src = url;
       URL.revokeObjectURL(url);
     });
   }
@@ -102,7 +102,7 @@ class Slider {
     const colorArrayView = new Uint8Array(buffer);
 
     for (let i = 0; i < width; i++) {
-      const [r, g, b] = okhsl_to_srgb(i / width, this.okhsv.s, this.okhsv.v);
+      const [r, g, b] = okhsl_to_srgb(i / width, this.okhsl.s, this.okhsl.l);
       for (let j = 0; j < height; j++) {
         const index = (j * width + i) * 3;
         colorArrayView[index] = r;
@@ -133,7 +133,7 @@ class Slider {
     const colorArrayView = new Uint8Array(buffer);
 
     for (let i = 0; i < width; i++) {
-      const [r, g, b] = okhsl_to_srgb(this.okhsv.h, i / width, this.okhsv.v);
+      const [r, g, b] = okhsl_to_srgb(this.okhsl.h, i / width, this.okhsl.l);
       for (let j = 0; j < height; j++) {
         const index = (j * width + i) * 3;
         colorArrayView[index] = r;
@@ -159,12 +159,12 @@ class Slider {
     return url;
   }
 
-  render_value(width, height) {
+  render_lightness(width, height) {
     const buffer = new ArrayBuffer(width * height * 3);
     const colorArrayView = new Uint8Array(buffer);
 
     for (let i = 0; i < width; i++) {
-      const [r, g, b] = okhsl_to_srgb(this.okhsv.h, this.okhsv.s, i / width);
+      const [r, g, b] = okhsl_to_srgb(this.okhsl.h, this.okhsl.s, i / width);
       for (let j = 0; j < height; j++) {
         const index = (j * width + i) * 3;
         colorArrayView[index] = r;

@@ -33,15 +33,15 @@ class Input {
     });
   }
 
-  setValueInput(input) {
-    this.value_input = document.getElementById(input);
+  setLightnessInput(input) {
+    this.lightness_input = document.getElementById(input);
 
-    this.value_input.addEventListener("input", () => {
-      this.okhsv.v = this.value_input.value / 100;
+    this.lightness_input.addEventListener("input", () => {
+      this.okhsv.v = this.lightness_input.value / 100;
     });
 
-    this.okhsv.registerValueChange(() => {
-      this.value_input.value = Math.round(this.okhsv.v * 100);
+    this.okhsv.registerLightnessChange(() => {
+      this.lightness_input.value = Math.round(this.okhsv.v * 100);
     });
   }
 

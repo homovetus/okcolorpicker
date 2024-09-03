@@ -7,23 +7,23 @@ class HSVState {
     this._psState = psState;
     this._hue = hsv[0];
     this._saturation = hsv[1];
-    this._value = hsv[2];
+    this._lightness = hsv[2];
     this.hueChangeCallbacks = [];
     this.saturationChangeCallbacks = [];
-    this.valueChangeCallbacks = [];
+    this.lightnessChangeCallbacks = [];
     this.hueChangeFgCallbacks = [];
     this.saturationChangeFgCallbacks = [];
-    this.valueChangeFgCallbacks = [];
+    this.lightnessChangeFgCallbacks = [];
 
     this._psState.registerfgChange(() => {
       let color = this._psState.foregroundColor.rgb;
       let hsv = srgb_to_okhsl(color.red, color.green, color.blue);
       this._hue = hsv[0];
       this._saturation = hsv[1];
-      this._value = hsv[2];
+      this._lightness = hsv[2];
       this.hueChangeCallbacks.forEach((callback) => callback());
       this.saturationChangeCallbacks.forEach((callback) => callback());
-      this.valueChangeCallbacks.forEach((callback) => callback());
+      this.lightnessChangeCallbacks.forEach((callback) => callback());
     });
   }
 
@@ -35,8 +35,8 @@ class HSVState {
     this.saturationChangeCallbacks.push(callback);
   }
 
-  registerValueChange(callback) {
-    this.valueChangeCallbacks.push(callback);
+  registerLightnessChange(callback) {
+    this.lightnessChangeCallbacks.push(callback);
   }
 
   whenHueChangeFg(callback) {
@@ -47,13 +47,13 @@ class HSVState {
     this.saturationChangeFgCallbacks.push(callback);
   }
 
-  whenValueChangeFg(callback) {
-    this.valueChangeFgCallbacks.push(callback);
+  whenLightnessChangeFg(callback) {
+    this.lightnessChangeFgCallbacks.push(callback);
   }
 
   refresh() {
     this.saturationChangeCallbacks.forEach((callback) => callback());
-    this.valueChangeCallbacks.forEach((callback) => callback());
+    this.lightnessChangeCallbacks.forEach((callback) => callback());
     this.hueChangeCallbacks.forEach((callback) => callback());
   }
 
@@ -61,8 +61,8 @@ class HSVState {
     return this._hue;
   }
 
-  set h(newHue) {
-    this._hue = newHue;
+  set h(hue) {
+    this._hue = hue;
     this.hueChangeCallbacks.forEach((callback) => callback());
     this.hueChangeFgCallbacks.forEach((callback) => callback());
   }
@@ -71,20 +71,20 @@ class HSVState {
     return this._saturation;
   }
 
-  set s(newSaturation) {
-    this._saturation = newSaturation;
+  set s(saturation) {
+    this._saturation = saturation;
     this.saturationChangeCallbacks.forEach((callback) => callback());
     this.saturationChangeFgCallbacks.forEach((callback) => callback());
   }
 
-  get v() {
-    return this._value;
+  get l() {
+    return this._lightness;
   }
 
-  set v(newValue) {
-    this._value = newValue;
-    this.valueChangeCallbacks.forEach((callback) => callback());
-    this.valueChangeFgCallbacks.forEach((callback) => callback());
+  set l(lightness) {
+    this._lightness = lightness;
+    this.lightnessChangeCallbacks.forEach((callback) => callback());
+    this.lightnessChangeFgCallbacks.forEach((callback) => callback());
   }
 }
 

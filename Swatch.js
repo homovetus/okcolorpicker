@@ -1,24 +1,26 @@
+const { okhsl_to_srgb } = require("./conversion");
+
 class Swatch {
-  constructor(psState, okhsv) {
+  constructor(psState, okhsl) {
     this.psState = psState;
-    this.okhcl = okhsv;
+    this.okhsl = okhsl;
   }
 
   setForeground(view_id) {
     this.fg_view = document.getElementById(view_id);
 
-    this.okhcl.registerHueChange(() => {
-      let rgb = okhsl_to_srgb(this.okhcl.h, this.okhcl.s, this.okhcl.v);
+    this.okhsl.registerHueChange(() => {
+      let rgb = okhsl_to_srgb(this.okhsl.h, this.okhsl.s, this.okhsl.l);
       this.fg_view.style.backgroundColor = `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
     });
 
-    this.okhcl.registerSaturationChange(() => {
-      let rgb = okhsl_to_srgb(this.okhcl.h, this.okhcl.s, this.okhcl.v);
+    this.okhsl.registerSaturationChange(() => {
+      let rgb = okhsl_to_srgb(this.okhsl.h, this.okhsl.s, this.okhsl.l);
       this.fg_view.style.backgroundColor = `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
     });
 
-    this.okhcl.registerValueChange(() => {
-      let rgb = okhsl_to_srgb(this.okhcl.h, this.okhcl.s, this.okhcl.v);
+    this.okhsl.registerLightnessChange(() => {
+      let rgb = okhsl_to_srgb(this.okhsl.h, this.okhsl.s, this.okhsl.l);
       this.fg_view.style.backgroundColor = `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
     });
   }
