@@ -15,17 +15,17 @@ swatch.setForeground("foreground");
 swatch.setBackground("background");
 
 let slider = new Slider(okhsv);
-slider.setHueComponent("hsl_h_s", "hsl_h_m");
-slider.setSaturationComponent("hsl_c_s", "hsl_c_m");
-slider.setLightnessComponent("hsl_l_s", "hsl_l_m");
+slider.setHueComponent("okhsl_h_s", "okhsl_h_m");
+slider.setSaturationComponent("okhsl_s_s", "okhsl_s_m");
+slider.setLightnessComponent("okhsl_l_s", "okhsl_l_m");
 
 let input = new Input(okhsv);
-input.setHueInput("hsl_h_i");
-input.setSaturationInput("hsl_c_i");
-input.setLightnessInput("hsl_l_i");
+input.setHueInput("okhsl_h_i");
+input.setSaturationInput("okhsl_s_i");
+input.setLightnessInput("okhsl_l_i");
 
 let slider2D = new Slider2D(okhsv);
-slider2D.setSLComponent("hsl_sv_s", "hsl_sv_m");
+slider2D.setSLComponent("okhsl_sl_s", "okhsl_sl_m");
 
 resizeSquare();
 okhsv.refresh();
@@ -40,7 +40,7 @@ document.addEventListener(
       psState._updatePSForegroud();
     }
   },
-  false,
+  false
 );
 
 document.addEventListener(
@@ -50,5 +50,5 @@ document.addEventListener(
       state.mouse_handler(event);
     }
   },
-  false,
+  false
 );
