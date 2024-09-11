@@ -72,11 +72,13 @@ class SliderHS {
     const body = document.getElementsByTagName("body")[0];
     const background =
       getComputedStyle(body).getPropertyValue("background-color");
+    const b_r = parseInt(background.substring(1, 3), 16);
+    const b_g = parseInt(background.substring(3, 5), 16);
+    const b_b = parseInt(background.substring(5, 7), 16);
 
-    // Precompute values
     const invHeight = 1 / height;
     const invWidth = 1 / width;
-    const okhsl_l = this.okhsl.l; // Cache this.okhsl.l outside the loop
+    const okhsl_l = this.okhsl.l;
 
     for (let i = 0; i < height; i++) {
       const hsl_a = 2 * i * invHeight - 1;
@@ -97,16 +99,17 @@ class SliderHS {
           colorArrayView[index + 1] = rgb[1];
           colorArrayView[index + 2] = rgb[2];
         } else {
-          colorArrayView[index + 0] = parseInt(background.slice(1, 3), 16);
-          colorArrayView[index + 1] = parseInt(background.slice(3, 5), 16);
-          colorArrayView[index + 2] = parseInt(background.slice(5, 7), 16);
+          colorArrayView[index + 0] = b_r;
+          colorArrayView[index + 1] = b_g;
+          colorArrayView[index + 2] = b_b;
         }
       }
     }
 
+    const biggerImage = this.upscaleCircle(colorArrayView, width, width * 4);
     const imageMetaData = {
-      width: width,
-      height: height,
+      width: width * 4,
+      height: height * 4,
       colorSpace: "RGB",
       pixelFormat: "RGB",
       components: 3,
@@ -115,8 +118,45 @@ class SliderHS {
       type: "image/uncompressed",
     };
 
-    const imageBlob = new ImageBlob(colorArrayView, imageMetaData);
+    const imageBlob = new ImageBlob(biggerImage, imageMetaData);
     return URL.createObjectURL(imageBlob);
+  }
+
+  upscaleCircle(lowres_data, lowres_data_width, data_width) {
+    const body = document.getElementsByTagName("body")[0];
+    const background =
+      getComputedStyle(body).getPropertyValue("background-color");
+    const b_r = parseInt(background.substring(1, 3), 16);
+    const b_g = parseInt(background.substring(3, 5), 16);
+    const b_b = parseInt(background.substring(5, 7), 16);
+
+    const data = new Uint8ClampedArray(data_width * data_width * 3);
+    const inv_width = 1 / data_width;
+    for (let i = 0; i < data_width; i++) {
+      const hsl_a = 2 * i * inv_width - 1;
+      for (let j = 0; j < data_width; j++) {
+        const hsl_b = 1 - 2 * j * inv_width;
+        const index = 3 * (i * data_width + j);
+        const distSquared = hsl_a * hsl_a + hsl_b * hsl_b;
+        if (distSquared <= 0.97) {
+          const x_ratio = Math.floor(
+            (i / (data_width - 1)) * (lowres_data_width - 1)
+          );
+          const y_ratio = Math.floor(
+            (j / (data_width - 1)) * (lowres_data_width - 1)
+          );
+          const lowres_index = 3 * (x_ratio * lowres_data_width + y_ratio);
+          data[index + 0] = lowres_data[lowres_index + 0];
+          data[index + 1] = lowres_data[lowres_index + 1];
+          data[index + 2] = lowres_data[lowres_index + 2];
+        } else {
+          data[index + 0] = b_r;
+          data[index + 1] = b_g;
+          data[index + 2] = b_b;
+        }
+      }
+    }
+    return data;
   }
 }
 

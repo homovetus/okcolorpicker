@@ -3,6 +3,7 @@ const PSState = require("./PSState");
 const HSLState = require("./HSLState");
 const Slider = require("./Slider");
 const Slider2D = require("./Slider2D");
+const SliderHS = require("./SliderHS");
 const Swatch = require("./Swatch");
 const Input = require("./Input");
 
@@ -28,9 +29,14 @@ let slider2D = new Slider2D(psState, okhsl);
 slider2D.setSLComponent("okhsl_sl_s", "okhsl_sl_m");
 
 resizeSquare();
-okhsl.refresh();
+setTimeout(() => {
+  okhsl.refresh();
+}, 200);
 
-window.addEventListener("resize", resizeSquare);
+window.addEventListener("resize", () => {
+  resizeSquare();
+  okhsl.refresh();
+});
 
 document.addEventListener(
   "mouseup",

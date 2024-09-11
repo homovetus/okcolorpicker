@@ -26,13 +26,13 @@ class Slider {
     });
 
     this.okhsl.registerSaturationChange(() => {
-      let url = this.render_hue(100, 1);
+      let url = this.render_hue(200, 1);
       this.hue_view.src = url;
       URL.revokeObjectURL(url);
     });
 
     this.okhsl.registerLightnessChange(() => {
-      let url = this.render_hue(100, 1);
+      let url = this.render_hue(200, 1);
       this.hue_view.src = url;
       URL.revokeObjectURL(url);
     });
@@ -86,13 +86,13 @@ class Slider {
     });
 
     this.okhsl.registerHueChange(() => {
-      let url = this.render_lightness(100, 1);
+      let url = this.render_lightness(200, 1);
       this.lightness_view.src = url;
       URL.revokeObjectURL(url);
     });
 
     this.okhsl.registerSaturationChange(() => {
-      let url = this.render_lightness(100, 1);
+      let url = this.render_lightness(200, 1);
       this.lightness_view.src = url;
       URL.revokeObjectURL(url);
     });
