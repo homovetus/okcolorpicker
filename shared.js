@@ -29,6 +29,9 @@ function setup_view_handler(view, psState, handler) {
   view.addEventListener(
     "mousedown",
     function (event) {
+      if (event.button !== 0) {
+        return;
+      }
       psState.receive = false;
       state.mouse_handler = mouse_handler;
       mouse_handler(event);
