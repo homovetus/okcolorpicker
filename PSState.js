@@ -1,11 +1,13 @@
 const app = require("photoshop").app;
-const { state } = require("./shared");
 const { executeAsModal } = require("photoshop").core;
 
 class PSState {
   constructor() {
     this.foregroundColor = app.foregroundColor;
     this.backgroundColor = app.backgroundColor;
+    this.documentBackgroundColor = getComputedStyle(
+      document.body
+    ).backgroundColor;
     this.receive = true;
     this._fgChangeCallbacks = [];
     this._bgChangeCallbacks = [];
@@ -20,6 +22,14 @@ class PSState {
 
       if (this._isUpdating || !this.receive) {
         continue;
+      }
+
+      let newDocumentBackgroundColor = getComputedStyle(
+        document.body
+      ).backgroundColor;
+      if (newDocumentBackgroundColor !== this.documentBackgroundColor) {
+        this.documentBackgroundColor = newDocumentBackgroundColor;
+        this._fgChangeCallbacks.forEach((callback) => callback());
       }
 
       if (!app.foregroundColor.isEqual(this.foregroundColor)) {

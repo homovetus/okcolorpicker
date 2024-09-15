@@ -134,15 +134,13 @@ class Slider2D {
     let imageBlob = new ImageBlob(colorArrayView, imageMetaData);
     return URL.createObjectURL(imageBlob);
   }
+
   render_hs(width, height) {
     const pixelCount = width * height;
     const buffer = new ArrayBuffer(pixelCount * 3);
     const colorArrayView = new Uint8Array(buffer);
 
-    // get body element's background color
-    const body = document.getElementsByTagName("body")[0];
-    const background =
-      getComputedStyle(body).getPropertyValue("background-color");
+    const background = this._psState.documentBackgroundColor;
     const b_r = parseInt(background.substring(1, 3), 16);
     const b_g = parseInt(background.substring(3, 5), 16);
     const b_b = parseInt(background.substring(5, 7), 16);
@@ -194,9 +192,7 @@ class Slider2D {
   }
 
   upscaleCircle(lowres_data, lowres_data_width, data_width) {
-    const body = document.getElementsByTagName("body")[0];
-    const background =
-      getComputedStyle(body).getPropertyValue("background-color");
+    const background = this._psState.documentBackgroundColor;
     const b_r = parseInt(background.substring(1, 3), 16);
     const b_g = parseInt(background.substring(3, 5), 16);
     const b_b = parseInt(background.substring(5, 7), 16);
