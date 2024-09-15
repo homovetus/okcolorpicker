@@ -18,7 +18,23 @@
       "minimumSize": { "width": 230, "height": 200 },
       "maximumSize": { "width": 1000, "height": 1000 },
       "preferredDockedSize": { "width": 230, "height": 280 },
-      "preferredFloatingSize": { "width": 230, "height": 280 }
+      "preferredFloatingSize": { "width": 230, "height": 280 },
+      "icons": [
+        {
+          "width": 23,
+          "height": 23,
+          "path": "icons/dark.png",
+          "scale": [1, 2],
+          "theme": ["darkest", "dark"]
+        },
+        {
+          "width": 23,
+          "height": 23,
+          "path": "icons/light.png",
+          "scale": [1, 2],
+          "theme": ["lightest", "light"]
+        }
+      ]
     },
     {
       "type": "panel",
@@ -27,7 +43,23 @@
       "minimumSize": { "width": 230, "height": 200 },
       "maximumSize": { "width": 500, "height": 310 },
       "preferredDockedSize": { "width": 230, "height": 280 },
-      "preferredFloatingSize": { "width": 320, "height": 310 }
+      "preferredFloatingSize": { "width": 320, "height": 310 },
+      "icons": [
+        {
+          "width": 23,
+          "height": 23,
+          "path": "icons/dark.png",
+          "scale": [1, 2],
+          "theme": ["darkest", "dark"]
+        },
+        {
+          "width": 23,
+          "height": 23,
+          "path": "icons/light.png",
+          "scale": [1, 2],
+          "theme": ["lightest", "light"]
+        }
+      ]
     }
   ],
   "icons": [
