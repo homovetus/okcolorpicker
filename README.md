@@ -1,6 +1,6 @@
-# OK Picker
+# Ok Picker
 
-OK Picker is a color picker plugin for Adobe Photoshop, utilizing the OKHsl color space for improved color selection and manipulation.
+Ok Picker is a color picker plugin for Adobe Photoshop, utilizing the Okhsl color space for improved color selection and manipulation.
 
 ## Features
 

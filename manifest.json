@@ -1,7 +1,7 @@
 {
   "manifestVersion": 5,
   "id": "1865700c",
-  "name": "OK Picker",
+  "name": "Ok Picker",
   "version": "1.0.0",
   "main": "index.html",
   "host": [
@@ -14,7 +14,7 @@
     {
       "type": "panel",
       "id": "picker",
-      "label": "OK Picker",
+      "label": "Ok Picker",
       "minimumSize": { "width": 230, "height": 200 },
       "maximumSize": { "width": 1000, "height": 1000 },
       "preferredDockedSize": { "width": 230, "height": 280 },
